@@ -2,3 +2,4 @@ dist
 .cache
 .parcel-cache
 node_modules
+game.zip
