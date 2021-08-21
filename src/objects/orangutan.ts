@@ -12,16 +12,16 @@ class Orangutan extends Sprite.class {
   }
 
   update = (): void => {
-    if (keyPressed('left')) {
+    if (keyPressed('left') || keyPressed('j')) {
       this.dx = -2;
-    } else if (keyPressed('right')) {
+    } else if (keyPressed('right') || keyPressed('l')) {
       this.dx = 2;
     } else {
       this.dx = 0;
     }
-    if (keyPressed('up')) {
+    if (keyPressed('up') || keyPressed('i')) {
       this.dy = -2;
-    } else if (keyPressed('down')) {
+    } else if (keyPressed('down') || keyPressed('k')) {
       this.dy = 2;
     } else {
       this.dy = 0;
