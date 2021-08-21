@@ -2,7 +2,7 @@ import { loadImage, TileEngine } from 'kontra';
 
 const getLayer = (): number[] => {
   const data = [...Array(15 * 13).keys()].map((key: number) =>
-    key % 2 ? 1 : 2
+    key % 5 ? 3 : 2
   );
   return data;
 };
