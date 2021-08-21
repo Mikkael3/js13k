@@ -1,16 +1,16 @@
 import { GameObject, getCanvas, Quadtree, Scene, TileEngine } from 'kontra';
-import Building from '../objects/building';
 import Orangutan from '../objects/orangutan';
+import Zone from '../objects/zone';
 
 class Play extends Scene.class {
   public player: GameObject;
   public quadtree = new Quadtree();
   constructor(public map: TileEngine) {
     const orangutan = new Orangutan(getCanvas(), map);
-    const building = new Building(350, 500, 2, 1, 1);
+    const zone1 = new Zone(600, 1600);
     super({
       id: 'play',
-      children: [orangutan, building],
+      children: [orangutan, zone1],
     });
     this.player = orangutan;
     this.lookAt(orangutan);

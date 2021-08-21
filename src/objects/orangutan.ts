@@ -10,6 +10,24 @@ class Orangutan extends Sprite.class {
       height: 40,
     });
     this.map.sy = this.map.mapheight - canvas.height;
+    this.syncCamera();
+  }
+
+  syncCamera(): void {
+    if (this.parent instanceof Scene) {
+      const startCameraFollow = this.canvas.height / 2;
+      const y = this.y > startCameraFollow ? startCameraFollow : this.y;
+      if (this.map.sy > 0)
+        this.parent.lookAt({ y: y, x: this.canvas.width / 2 });
+      this.map.sx = 16;
+      const sy =
+        this.y > startCameraFollow
+          ? this.map.mapheight - this.canvas.height
+          : this.map.mapheight -
+            this.canvas.height -
+            (startCameraFollow - this.y);
+      this.map.sy = sy > 0 ? sy : 0;
+    }
   }
 
   draw(): void {
@@ -50,21 +68,7 @@ class Orangutan extends Sprite.class {
     }
 
     this.advance();
-
-    if (this.parent instanceof Scene) {
-      const startCameraFollow = this.canvas.height / 2;
-      const y = this.y > startCameraFollow ? startCameraFollow : this.y;
-      if (this.map.sy > 0)
-        this.parent.lookAt({ y: y, x: this.canvas.width / 2 });
-      this.map.sx = 16;
-      const sy =
-        this.y > startCameraFollow
-          ? this.map.mapheight - this.canvas.height
-          : this.map.mapheight -
-            this.canvas.height -
-            (startCameraFollow - this.y);
-      this.map.sy = sy > 0 ? sy : 0;
-    }
+    this.syncCamera();
   };
 }
 
