@@ -1,4 +1,4 @@
-import { keyPressed, Sprite } from 'kontra';
+import { keyPressed, Scene, Sprite } from 'kontra';
 
 class Orangutan extends Sprite.class {
   constructor(private canvas: HTMLCanvasElement) {
@@ -26,9 +26,9 @@ class Orangutan extends Sprite.class {
     } else {
       this.dy = 0;
     }
-    if (this.x > this.canvas.width - 20) {
+    if (this.x > this.canvas.width - 30) {
       this.dx = 0;
-      this.x = 780;
+      this.x = this.canvas.width - 30;
     }
     if (this.x < 0) {
       this.dx = 0;
@@ -39,6 +39,10 @@ class Orangutan extends Sprite.class {
       this.y = 600;
     }
     this.advance();
+    if (this.parent instanceof Scene) {
+      const y = this.y > 320 ? 320 : this.y;
+      this.parent.lookAt({ y: y, x: 390 });
+    }
   }
 }
 
