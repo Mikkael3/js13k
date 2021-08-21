@@ -1,7 +1,7 @@
-import { keyPressed, Scene, Sprite } from 'kontra';
+import { keyPressed, Scene, Sprite, TileEngine } from 'kontra';
 
 class Orangutan extends Sprite.class {
-  constructor(private canvas: HTMLCanvasElement) {
+  constructor(private canvas: HTMLCanvasElement, private map: TileEngine) {
     super({
       x: 390, // starting x,y position of the sprite
       y: 600,
@@ -9,6 +9,7 @@ class Orangutan extends Sprite.class {
       width: 20, // width and height of the sprite rectangle
       height: 40,
     });
+    this.map.sy = this.map.mapheight - canvas.height;
   }
 
   update = (): void => {
@@ -37,10 +38,22 @@ class Orangutan extends Sprite.class {
       this.dy = 0;
       this.y = 600;
     }
+
     this.advance();
+
     if (this.parent instanceof Scene) {
-      const y = this.y > 320 ? 320 : this.y;
-      this.parent.lookAt({ y: y, x: 390 });
+      const startCameraFollow = this.canvas.height / 2;
+      const y = this.y > startCameraFollow ? startCameraFollow : this.y;
+      if (this.map.sy > 0)
+        this.parent.lookAt({ y: y, x: (this.canvas.width - this.width) / 2 });
+      this.map.sx = 16;
+      const sy =
+        this.y > startCameraFollow
+          ? this.map.mapheight - this.canvas.height
+          : this.map.mapheight -
+            this.canvas.height -
+            (startCameraFollow - this.y);
+      this.map.sy = sy > 0 ? sy : 0;
     }
   };
 }
