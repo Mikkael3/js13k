@@ -12,9 +12,9 @@ const main = async (): Promise<void> => {
   map.addObject(play);
   const loop = GameLoop({
     // create the main game loop
-    update: () => {
+    update: (dt: number) => {
       // update the game state
-      play.update();
+      play.update(dt);
     },
     render: () => {
       // render the game state
