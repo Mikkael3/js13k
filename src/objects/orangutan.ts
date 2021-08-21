@@ -55,7 +55,7 @@ class Orangutan extends Sprite.class {
       const startCameraFollow = this.canvas.height / 2;
       const y = this.y > startCameraFollow ? startCameraFollow : this.y;
       if (this.map.sy > 0)
-        this.parent.lookAt({ y: y, x: (this.canvas.width - this.width) / 2 });
+        this.parent.lookAt({ y: y, x: this.canvas.width / 2 });
       this.map.sx = 16;
       const sy =
         this.y > startCameraFollow
