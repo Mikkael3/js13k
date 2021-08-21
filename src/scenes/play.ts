@@ -1,10 +1,9 @@
-import { Scene, Sprite } from 'kontra';
-import { canvas } from '../game';
+import { getCanvas, Scene, Sprite } from 'kontra';
 import Orangutan from '../objects/orangutan';
 
 class Play extends Scene.class {
   constructor() {
-    const orangutan = new Orangutan(canvas);
+    const orangutan = new Orangutan(getCanvas());
     const first = Sprite({
       x: 300,
       y: 500,

@@ -1,7 +1,7 @@
 import { GameLoop, init, initKeys } from 'kontra';
 import Play from './scenes/play';
 
-export const { canvas } = init();
+init();
 initKeys();
 
 const play = new Play();
