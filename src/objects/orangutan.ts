@@ -11,7 +11,7 @@ class Orangutan extends Sprite.class {
     });
   }
 
-  update(): void {
+  update = (): void => {
     if (keyPressed('left')) {
       this.dx = -2;
     } else if (keyPressed('right')) {
@@ -42,7 +42,7 @@ class Orangutan extends Sprite.class {
       const y = this.y > 320 ? 320 : this.y;
       this.parent.lookAt({ y: y, x: 390 });
     }
-  }
+  };
 }
 
 export default Orangutan;
