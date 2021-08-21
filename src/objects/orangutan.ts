@@ -26,13 +26,12 @@ class Orangutan extends Sprite.class {
     } else {
       this.dy = 0;
     }
-    if (this.x > this.canvas.width - 30) {
+    if (this.x > this.canvas.width - this.width * 1.5) {
       this.dx = 0;
-      this.x = this.canvas.width - 30;
-    }
-    if (this.x < 0) {
+      this.x = this.canvas.width - this.width * 1.5;
+    } else if (this.x < -10) {
       this.dx = 0;
-      this.x = 0;
+      this.x = -10;
     }
     if (this.y > 600) {
       this.dy = 0;
