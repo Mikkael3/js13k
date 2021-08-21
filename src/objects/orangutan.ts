@@ -1,52 +1,48 @@
-import { keyPressed, Sprite } from 'kontra';
+import { keyPressed, Scene, Sprite } from 'kontra';
 
 class Orangutan extends Sprite.class {
   constructor(private canvas: HTMLCanvasElement) {
     super({
       x: 390, // starting x,y position of the sprite
-      y: 590,
+      y: 600,
       color: 'red', // fill color of the sprite rectangle
       width: 20, // width and height of the sprite rectangle
       height: 40,
     });
   }
 
-  update(): void {
+  update = (): void => {
     if (keyPressed('left')) {
       this.dx = -2;
-      // left arrow pressed
     } else if (keyPressed('right')) {
-      // right arrow pressed
       this.dx = 2;
     } else {
       this.dx = 0;
     }
-
-    console.log(this.dx);
-
     if (keyPressed('up')) {
       this.dy = -2;
-      // up arrow pressed
     } else if (keyPressed('down')) {
       this.dy = 2;
-      // down arrow pressed
     } else {
       this.dy = 0;
     }
-    if (this.x > this.canvas.width - 20) {
+    if (this.x > this.canvas.width - this.width * 1.5) {
       this.dx = 0;
-      this.x = 780;
-    }
-    if (this.x < 0) {
+      this.x = this.canvas.width - this.width * 1.5;
+    } else if (this.x < -10) {
       this.dx = 0;
-      this.x = 0;
+      this.x = -10;
     }
     if (this.y > 600) {
       this.dy = 0;
       this.y = 600;
     }
     this.advance();
-  }
+    if (this.parent instanceof Scene) {
+      const y = this.y > 320 ? 320 : this.y;
+      this.parent.lookAt({ y: y, x: 390 });
+    }
+  };
 }
 
 export default Orangutan;
