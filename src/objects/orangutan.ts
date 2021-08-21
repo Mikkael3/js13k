@@ -1,6 +1,8 @@
 import { keyPressed, Scene, Sprite, TileEngine } from 'kontra';
 
 class Orangutan extends Sprite.class {
+  isVertical = true;
+
   constructor(private canvas: HTMLCanvasElement, private map: TileEngine) {
     super({
       x: 390, // starting x,y position of the sprite
@@ -8,6 +10,7 @@ class Orangutan extends Sprite.class {
       color: 'orange', // fill color of the sprite rectangle
       width: 20, // width and height of the sprite rectangle
       height: 40,
+      anchor: { x: 0.5, y: 0.5 },
     });
     this.map.sy = this.map.mapheight - canvas.height;
     this.syncCamera();
@@ -36,22 +39,30 @@ class Orangutan extends Sprite.class {
   }
 
   update = (): void => {
+    let isVertical = this.isVertical;
     const speed = 2;
     if (keyPressed('left') || keyPressed('j')) {
       this.dx = -speed;
+      isVertical = false;
     } else if (keyPressed('right') || keyPressed('l')) {
       this.dx = speed;
+      isVertical = false;
     } else {
       this.dx = 0;
     }
     if (keyPressed('up') || keyPressed('i')) {
       this.dy = -speed;
       this.dx = 0;
+      isVertical = true;
     } else if (keyPressed('down') || keyPressed('k')) {
       this.dy = speed;
       this.dx = 0;
+      isVertical = true;
     } else {
       this.dy = 0;
+    }
+    if (isVertical !== this.isVertical) {
+      this.flipOrientation();
     }
     // Side borders
     if (this.x > this.canvas.width - this.width) {
@@ -70,6 +81,15 @@ class Orangutan extends Sprite.class {
     this.advance();
     this.syncCamera();
   };
+
+  /**
+   * Flip between horizontal and vertical orientation.
+   * @private
+   */
+  private flipOrientation(): void {
+    this.isVertical = !this.isVertical;
+    [this.width, this.height] = [this.height, this.width];
+  }
 }
 
 export default Orangutan;
