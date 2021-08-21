@@ -7,10 +7,10 @@ class Play extends Scene.class {
   public quadtree = new Quadtree();
   constructor(public map: TileEngine) {
     const orangutan = new Orangutan(getCanvas(), map);
-    const zone1 = new Zone(600, 1600);
+    const zone1 = new Zone(200, 500, 1);
     super({
       id: 'play',
-      children: [orangutan, zone1],
+      children: [orangutan, ...zone1.buildings],
     });
     this.player = orangutan;
     this.lookAt(orangutan);
