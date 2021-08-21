@@ -1,19 +1,19 @@
 import { GameLoop, init, initKeys } from 'kontra';
-import Orangutan from './orangutan';
+import Play from './scenes/play';
 
-const { canvas } = init();
+export const { canvas } = init();
 initKeys();
 
-const orangutan = new Orangutan(canvas);
+const play = new Play();
 const loop = GameLoop({
   // create the main game loop
   update: () => {
     // update the game state
-    orangutan.update();
+    play.update();
   },
   render: () => {
     // render the game state
-    orangutan.render();
+    play.render();
   },
 });
 
