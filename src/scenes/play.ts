@@ -1,6 +1,6 @@
 import { Scene, Sprite } from 'kontra';
 import { canvas } from '../game';
-import Orangutan from '../orangutan';
+import Orangutan from '../objects/orangutan';
 
 class Play extends Scene.class {
   constructor() {
