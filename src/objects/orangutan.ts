@@ -1,16 +1,19 @@
-import { keyPressed, Scene, Sprite, TileEngine } from 'kontra';
+import { degToRad, keyPressed, Scene, Sprite, TileEngine } from 'kontra';
 
 class Orangutan extends Sprite.class {
   isVertical = true;
 
-  constructor(private canvas: HTMLCanvasElement, private map: TileEngine) {
+  constructor(
+    private canvas: HTMLCanvasElement,
+    private map: TileEngine,
+    sprite: HTMLImageElement
+  ) {
     super({
       x: 390, // starting x,y position of the sprite
       y: 600,
-      color: 'orange', // fill color of the sprite rectangle
-      width: 20, // width and height of the sprite rectangle
-      height: 40,
       anchor: { x: 0.5, y: 0.5 },
+      image: sprite,
+      rotation: 0,
     });
     this.map.sy = this.map.mapheight - canvas.height;
     this.syncCamera();
@@ -33,18 +36,15 @@ class Orangutan extends Sprite.class {
     }
   }
 
-  draw(): void {
-    this.context.fillStyle = this.color;
-    this.context.fillRect(0, 0, this.width, this.height);
-  }
-
   update = (): void => {
     let isVertical = this.isVertical;
     const speed = 2;
     if (keyPressed('left') || keyPressed('j')) {
       this.dx = -speed;
       isVertical = false;
+      this.rotation = degToRad(-90);
     } else if (keyPressed('right') || keyPressed('l')) {
+      this.rotation = degToRad(90);
       this.dx = speed;
       isVertical = false;
     } else {
@@ -54,10 +54,12 @@ class Orangutan extends Sprite.class {
       this.dy = -speed;
       this.dx = 0;
       isVertical = true;
+      this.rotation = degToRad(0);
     } else if (keyPressed('down') || keyPressed('k')) {
       this.dy = speed;
       this.dx = 0;
       isVertical = true;
+      this.rotation = degToRad(180);
     } else {
       this.dy = 0;
     }

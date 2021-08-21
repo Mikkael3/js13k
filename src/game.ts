@@ -1,4 +1,4 @@
-import { GameLoop, init, initKeys } from 'kontra';
+import { GameLoop, init, initKeys, load, loadImage } from 'kontra';
 import getTileMap from './map';
 import Play from './scenes/play';
 
