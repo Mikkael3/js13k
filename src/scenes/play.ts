@@ -1,41 +1,23 @@
-import { getCanvas, Scene, Sprite } from 'kontra';
+import { getCanvas, Quadtree, Scene, TileEngine } from 'kontra';
+import Building from '../objects/building';
 import Orangutan from '../objects/orangutan';
 
 class Play extends Scene.class {
-  constructor() {
-    const orangutan = new Orangutan(getCanvas());
-    const first = Sprite({
-      x: 300,
-      y: 500,
-      anchor: { x: 0.5, y: 0.5 },
-      width: 20,
-      height: 40,
-      color: 'red',
-    });
-
-    const second = Sprite({
-      x: 300,
-      y: 400,
-      anchor: { x: 0.5, y: 0.5 },
-      width: 20,
-      height: 40,
-      color: 'red',
-    });
-
-    const third = Sprite({
-      x: 0,
-      y: 400,
-      anchor: { x: 0.5, y: 0.5 },
-      width: 20,
-      height: 40,
-      color: 'red',
-    });
-
+  public quadtree = new Quadtree();
+  constructor(public map: TileEngine) {
+    const orangutan = new Orangutan(getCanvas(), map);
+    const building = new Building(350, 500, 2, 1, 1);
     super({
       id: 'play',
-      children: [orangutan, first, second, third],
+      children: [orangutan, building],
     });
     this.lookAt(orangutan);
+  }
+
+  update(dt?: number): void {
+    super.update(dt);
+    this.quadtree.clear();
+    this.quadtree.add(this.children);
   }
 }
 
