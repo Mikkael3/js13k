@@ -13,13 +13,13 @@ class Play extends Scene.class {
   public player: GameObject;
   public quadtree = new Quadtree();
   constructor(public map: TileEngine) {
-    const zone1 = new Zone(200, 500, 1);
     super({
       id: 'play',
-      children: [...zone1.buildings],
+      children: [],
       cullObjects: false,
     });
     this.createPlayer();
+    this.createZones();
   }
 
   update(dt?: number): void {
@@ -34,6 +34,13 @@ class Play extends Scene.class {
     this.player = orangutan;
     this.lookAt(orangutan);
     this.addChild(orangutan);
+  }
+
+  async createZones(): Promise<void> {
+    const zone1ceiling = await loadImage('zone1ceiling.png');
+    const zone1wall = await loadImage('zone1wall.png');
+    const zone1 = new Zone(200, 500, 1, zone1ceiling, zone1wall);
+    zone1.buildings.forEach((b) => this.addChild(b));
   }
 }
 

@@ -7,7 +7,9 @@ class Zone {
   constructor(
     private startY: number,
     private size: number,
-    private hp: number
+    private hp: number,
+    public ceiling: HTMLImageElement,
+    public wall: HTMLImageElement
   ) {
     this.genBuildings();
   }
@@ -22,7 +24,9 @@ class Zone {
         randInt(this.startY - this.size, this.startY),
         width,
         height,
-        this.hp
+        this.hp,
+        this.ceiling,
+        this.wall
       );
       if (!this.buildings.some((b) => collides(b, building))) {
         this.buildings.push(building);

@@ -4,20 +4,25 @@ import Play from '../scenes/play';
 import explodePool from './explode-pool';
 
 class BuildingPart extends Sprite.class {
-  constructor(x: number, y: number, public hp: number) {
+  constructor(
+    x: number,
+    y: number,
+    public hp: number,
+    material: HTMLImageElement
+  ) {
     super({
       x: x,
       y: y,
-      color: 'yellow',
       width: 64,
       height: 64,
+      image: material,
     });
   }
 
   handleHit = (map: TileEngine): void => {
     if (this.hp === 0) return;
     this.hp -= 1;
-    if (this.hp === 0) this.color = 'black';
+    if (this.hp === 0) this.opacity = 0.33;
     if (!this.parent) return;
     let i = 0;
     while (i < 50) {
@@ -52,7 +57,9 @@ class Building extends GameObject.class {
     y: number,
     width: number,
     height: number,
-    public hp: number
+    public hp: number,
+    public ceiling: HTMLImageElement,
+    public wall: HTMLImageElement
   ) {
     super({
       x: x,
@@ -66,7 +73,8 @@ class Building extends GameObject.class {
   createParts = (width: number, height: number): void => {
     for (let i = 0; i < width; i++) {
       for (let j = 0; j < height; j++) {
-        this.addChild(new BuildingPart(i * 64, j * 64, this.hp));
+        const material = j === 0 ? this.ceiling : this.wall;
+        this.addChild(new BuildingPart(i * 64, j * 64, this.hp, material));
       }
     }
   };
