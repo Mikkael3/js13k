@@ -85,7 +85,7 @@ class Orangutan extends Sprite.class {
 
     this.advance();
     // Cap max speed
-    const maxSpeed = 5;
+    const maxSpeed = 2.5;
     this.dy =
       Math.sign(this.dy) * Math.min(Math.abs(this.dy), Math.abs(maxSpeed));
     this.dx =
