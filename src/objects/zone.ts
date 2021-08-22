@@ -1,9 +1,11 @@
 import { collides, getCanvas, randInt } from 'kontra';
 import Building from './building';
+import Enemy from './enemy';
 
 class Zone {
   private buildingAmount = 33;
   public buildings: Building[] = [];
+  public enemies: Enemy[] = [];
   constructor(
     private startY: number,
     private size: number,
@@ -12,6 +14,7 @@ class Zone {
     public wall: HTMLImageElement
   ) {
     this.genBuildings();
+    this.genEnemies();
   }
 
   genBuildings = (): void => {
@@ -34,6 +37,11 @@ class Zone {
       }
     }
   };
+
+  genEnemies(): void {
+    const enemy = new Enemy();
+    this.enemies.push(enemy);
+  }
 }
 
 export default Zone;

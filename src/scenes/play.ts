@@ -33,7 +33,8 @@ class Play extends Scene.class {
     const zone1ceiling = await loadImage('zone1ceiling.png');
     const zone1wall = await loadImage('zone1wall.png');
     const zone1 = new Zone(200, 500, 1, zone1ceiling, zone1wall);
-    zone1.buildings.forEach((b) => this.addChild(b));
+    zone1.buildings.forEach((building) => this.addChild(building));
+    zone1.enemies.forEach((enemy) => this.addChild(enemy));
   }
 }
 
