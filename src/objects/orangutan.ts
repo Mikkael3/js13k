@@ -35,27 +35,40 @@ class Orangutan extends Sprite.class {
   }
 
   update = (): void => {
-    const speed = 2;
+    const acceleration = 0.14;
     if (keyPressed('left') || keyPressed('j')) {
-      this.dx = -speed;
+      this.ddx = -acceleration;
+      this.ddy = 0;
+      this.dx = -Math.abs(this.dx) - Math.abs(this.dy);
+      this.dy = 0;
       this.rotation = degToRad(-90);
     } else if (keyPressed('right') || keyPressed('l')) {
+      this.ddx = acceleration;
+      this.ddy = 0;
+      this.dx = Math.abs(this.dx) + Math.abs(this.dy);
+      this.dy = 0;
       this.rotation = degToRad(90);
-      this.dx = speed;
-    } else {
-      this.dx = 0;
-    }
-    if (keyPressed('up') || keyPressed('i')) {
-      this.dy = -speed;
+    } else if (keyPressed('up') || keyPressed('i')) {
+      this.ddx = 0;
+      this.ddy = -acceleration;
+      this.dy = -Math.abs(this.dy) - Math.abs(this.dx);
       this.dx = 0;
       this.rotation = degToRad(0);
     } else if (keyPressed('down') || keyPressed('k')) {
-      this.dy = speed;
+      this.ddx = 0;
+      this.ddy = acceleration;
+      this.dy = Math.abs(this.dy) + Math.abs(this.dx);
       this.dx = 0;
       this.rotation = degToRad(180);
     } else {
-      this.dy = 0;
+      this.ddx = 0;
+      this.ddy = 0;
     }
+
+    // Deceleration
+    this.dx = Math.sign(this.dx) * Math.max(Math.abs(this.dx) - 0.1, 0);
+    this.dy = Math.sign(this.dy) * Math.max(Math.abs(this.dy) - 0.1, 0);
+
     // Side borders
     if (this.x > this.canvas.width - this.width) {
       this.dx = 0;
@@ -71,6 +84,13 @@ class Orangutan extends Sprite.class {
     }
 
     this.advance();
+    // Cap max speed
+    const maxSpeed = 5;
+    this.dy =
+      Math.sign(this.dy) * Math.min(Math.abs(this.dy), Math.abs(maxSpeed));
+    this.dx =
+      Math.sign(this.dx) * Math.min(Math.abs(this.dx), Math.abs(maxSpeed));
+
     this.syncCamera();
   };
 }
