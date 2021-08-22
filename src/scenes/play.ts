@@ -1,16 +1,9 @@
-import {
-  GameObject,
-  getCanvas,
-  loadImage,
-  Quadtree,
-  Scene,
-  TileEngine,
-} from 'kontra';
+import { getCanvas, loadImage, Quadtree, Scene, TileEngine } from 'kontra';
 import Orangutan from '../objects/orangutan';
 import Zone from '../objects/zone';
 
 class Play extends Scene.class {
-  public player: GameObject;
+  public player: Orangutan;
   public quadtree = new Quadtree();
   constructor(public map: TileEngine) {
     super({

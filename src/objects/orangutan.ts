@@ -41,7 +41,8 @@ class Orangutan extends Sprite.class {
 
   private handleControls(): void {
     const maxSpeed = 2.5;
-    const acceleration = 0.14;
+    const acceleration = 0.13;
+    const deceleration = 0.1;
 
     if (keyPressed('left') || keyPressed('j')) {
       this.ddx = -acceleration;
@@ -73,8 +74,10 @@ class Orangutan extends Sprite.class {
     }
 
     // Deceleration
-    this.dx = Math.sign(this.dx) * Math.max(Math.abs(this.dx) - 0.1, 0);
-    this.dy = Math.sign(this.dy) * Math.max(Math.abs(this.dy) - 0.1, 0);
+    this.dx =
+      Math.sign(this.dx) * Math.max(Math.abs(this.dx) - deceleration, 0);
+    this.dy =
+      Math.sign(this.dy) * Math.max(Math.abs(this.dy) - deceleration, 0);
 
     // Side borders
     if (this.x > this.canvas.width - this.width) {
@@ -96,6 +99,11 @@ class Orangutan extends Sprite.class {
       Math.sign(this.dy) * Math.min(Math.abs(this.dy), Math.abs(maxSpeed));
     this.dx =
       Math.sign(this.dx) * Math.min(Math.abs(this.dx), Math.abs(maxSpeed));
+  }
+
+  public handleHitBuilding(): void {
+    this.dx /= 4;
+    this.dy /= 4;
   }
 }
 

@@ -2,6 +2,7 @@ import { GameObject, getCanvas, Sprite, TileEngine } from 'kontra';
 import collides from '../helpers/collides';
 import Play from '../scenes/play';
 import explodePool from './explode-pool';
+import Orangutan from './orangutan';
 
 class BuildingPart extends Sprite.class {
   constructor(
@@ -19,10 +20,13 @@ class BuildingPart extends Sprite.class {
     });
   }
 
-  handleHit = (map: TileEngine): void => {
+  handleHit = (map: TileEngine, player: Orangutan): void => {
     if (this.hp === 0) return;
     this.hp -= 1;
-    if (this.hp === 0) this.opacity = 0.33;
+    if (this.hp === 0) {
+      this.opacity = 0.33;
+      player.handleHitBuilding();
+    }
     if (!this.parent) return;
     let i = 0;
     while (i < 50) {
@@ -80,7 +84,6 @@ class Building extends GameObject.class {
   };
 
   update = (): void => {
-    //void
     if (this.parent instanceof Play && this.parent.player) {
       if (this.children.every((child) => child.hp <= 0)) {
         this.parent.removeChild(this);
@@ -90,7 +93,11 @@ class Building extends GameObject.class {
         const parent = this.parent;
         if (!parent) return;
         this.children.forEach((child) => {
-          if (collides(child, parent.player)) child.handleHit(parent.map);
+          if (child instanceof BuildingPart) {
+            if (collides(child, parent.player)) {
+              child.handleHit(parent.map, parent.player);
+            }
+          }
         });
       }
     }
