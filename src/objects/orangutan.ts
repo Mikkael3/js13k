@@ -1,8 +1,6 @@
 import { degToRad, keyPressed, Scene, Sprite, TileEngine } from 'kontra';
 
 class Orangutan extends Sprite.class {
-  isVertical = true;
-
   constructor(
     private canvas: HTMLCanvasElement,
     private map: TileEngine,
@@ -37,34 +35,26 @@ class Orangutan extends Sprite.class {
   }
 
   update = (): void => {
-    let isVertical = this.isVertical;
     const speed = 2;
     if (keyPressed('left') || keyPressed('j')) {
       this.dx = -speed;
-      isVertical = false;
       this.rotation = degToRad(-90);
     } else if (keyPressed('right') || keyPressed('l')) {
       this.rotation = degToRad(90);
       this.dx = speed;
-      isVertical = false;
     } else {
       this.dx = 0;
     }
     if (keyPressed('up') || keyPressed('i')) {
       this.dy = -speed;
       this.dx = 0;
-      isVertical = true;
       this.rotation = degToRad(0);
     } else if (keyPressed('down') || keyPressed('k')) {
       this.dy = speed;
       this.dx = 0;
-      isVertical = true;
       this.rotation = degToRad(180);
     } else {
       this.dy = 0;
-    }
-    if (isVertical !== this.isVertical) {
-      this.flipOrientation();
     }
     // Side borders
     if (this.x > this.canvas.width - this.width) {
@@ -83,15 +73,6 @@ class Orangutan extends Sprite.class {
     this.advance();
     this.syncCamera();
   };
-
-  /**
-   * Flip between horizontal and vertical orientation.
-   * @private
-   */
-  private flipOrientation(): void {
-    this.isVertical = !this.isVertical;
-    [this.width, this.height] = [this.height, this.width];
-  }
 }
 
 export default Orangutan;
