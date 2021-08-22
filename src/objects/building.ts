@@ -1,4 +1,4 @@
-import { GameObject, getCanvas, Sprite } from 'kontra';
+import { GameObject, getCanvas, Sprite, TileEngine } from 'kontra';
 import collides from '../helpers/collides';
 import Play from '../scenes/play';
 import explodePool from './explode-pool';
@@ -14,9 +14,35 @@ class BuildingPart extends Sprite.class {
     });
   }
 
-  handleHit = (): void => {
+  handleHit = (map: TileEngine): void => {
+    if (this.hp === 0) return;
     this.hp -= 1;
     if (this.hp === 0) this.color = 'black';
+    if (!this.parent) return;
+    let i = 0;
+    while (i < 50) {
+      const y =
+        map.sy >= getCanvas().height / 2
+          ? this.parent.y + this.y + this.height / 2
+          : this.parent.y +
+            this.y +
+            getCanvas().height / 2 -
+            map.sy +
+            this.height / 2;
+      explodePool.get({
+        x: this.parent.x + this.x + this.width / 2,
+        y,
+        width: 4,
+        height: 4,
+        anchor: { x: 0.5, y: 0.5 },
+        dx: 2 - Math.random() * 4,
+        dy: 2 - Math.random() * 4,
+        color: i % 2 ? 'red' : 'gray',
+        maxSize: 100,
+        ttl: 120,
+      });
+      i++;
+    }
   };
 }
 
@@ -54,36 +80,9 @@ class Building extends GameObject.class {
       }
       if (collides(this.parent.player, this)) {
         const parent = this.parent;
-        const part = this.children.find((child) =>
-          collides(child, parent.player)
-        );
-        //this.hp -= 1;
-        if (part && part.hp >= 0) {
-          part.handleHit();
-          let i = 0;
-          while (i < 50) {
-            const y =
-              this.parent.map.sy >= getCanvas().height / 2
-                ? this.y + this.height / 2
-                : this.y +
-                  getCanvas().height / 2 -
-                  this.parent.map.sy +
-                  this.height / 2;
-            explodePool.get({
-              x: this.x + this.width / 2,
-              y,
-              width: 4,
-              height: 4,
-              anchor: { x: 0.5, y: 0.5 },
-              dx: 2 - Math.random() * 4,
-              dy: 2 - Math.random() * 4,
-              color: i % 2 ? 'red' : 'gray',
-              maxSize: 100,
-              ttl: 120,
-            });
-            i++;
-          }
-        }
+        this.children.forEach((child) => {
+          if (collides(child, parent.player)) child.handleHit(this.parent.map);
+        });
       }
     }
   };
