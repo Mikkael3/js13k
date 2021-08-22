@@ -80,8 +80,9 @@ class Building extends GameObject.class {
       }
       if (collides(this.parent.player, this)) {
         const parent = this.parent;
+        if (!parent) return;
         this.children.forEach((child) => {
-          if (collides(child, parent.player)) child.handleHit(this.parent.map);
+          if (collides(child, parent.player)) child.handleHit(parent.map);
         });
       }
     }
