@@ -23,5 +23,6 @@
         "usePrettierrc": true
       }
     ]
-  }
+  },
+  "ignorePatterns": ["dist/**", "node_modules/**"]
 }
