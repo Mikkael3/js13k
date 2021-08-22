@@ -34,8 +34,15 @@ class Orangutan extends Sprite.class {
     }
   }
 
-  update = (): void => {
+  update(): void {
+    this.handleControls();
+    this.syncCamera();
+  }
+
+  private handleControls(): void {
+    const maxSpeed = 2.5;
     const acceleration = 0.14;
+
     if (keyPressed('left') || keyPressed('j')) {
       this.ddx = -acceleration;
       this.ddy = 0;
@@ -85,14 +92,11 @@ class Orangutan extends Sprite.class {
 
     this.advance();
     // Cap max speed
-    const maxSpeed = 2.5;
     this.dy =
       Math.sign(this.dy) * Math.min(Math.abs(this.dy), Math.abs(maxSpeed));
     this.dx =
       Math.sign(this.dx) * Math.min(Math.abs(this.dx), Math.abs(maxSpeed));
-
-    this.syncCamera();
-  };
+  }
 }
 
 export default Orangutan;
