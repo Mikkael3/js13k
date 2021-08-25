@@ -6,6 +6,7 @@ import explodePool from './explode-pool';
 import Orangutan from './orangutan';
 
 class BuildingPart extends Sprite.class {
+  public hitTime = 0;
   constructor(
     x: number,
     y: number,
@@ -21,9 +22,22 @@ class BuildingPart extends Sprite.class {
     });
   }
 
-  handleHit = (map: TileEngine, player: Orangutan): void => {
+  handleHit = (map: TileEngine, dt: number, player: Orangutan): void => {
+    if (this.hp && new Date().getTime() - this.hitTime < 1000) {
+      player.handleHardHitBuilding();
+      return;
+    }
     if (this.hp === 0) return;
     this.hp -= 1;
+    this.hitTime = new Date().getTime();
+    if (this.hp === 2) {
+      this.opacity = 0.88;
+      player.handleHardHitBuilding();
+    }
+    if (this.hp === 1) {
+      this.opacity = 0.66;
+      player.handleHardHitBuilding();
+    }
     if (this.hp === 0) {
       this.opacity = 0.33;
       player.handleHitBuilding();
@@ -78,7 +92,7 @@ class Building extends GameObject.class {
     }
   };
 
-  update = (): void => {
+  update = (dt: number): void => {
     if (this.parent instanceof Play && this.parent.player) {
       if (this.children.every((child) => child.hp <= 0)) {
         this.parent.removeChild(this);
@@ -90,7 +104,7 @@ class Building extends GameObject.class {
         this.children.forEach((child) => {
           if (child instanceof BuildingPart) {
             if (collides(child, parent.player)) {
-              child.handleHit(parent.map, parent.player);
+              child.handleHit(parent.map, dt, parent.player);
             }
           }
         });

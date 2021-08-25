@@ -105,6 +105,10 @@ class Orangutan extends Sprite.class {
     this.dx /= 4;
     this.dy /= 4;
   }
+  public handleHardHitBuilding(): void {
+    this.dx = 0;
+    this.dy = 0;
+  }
 }
 
 export default Orangutan;
