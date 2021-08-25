@@ -1,4 +1,5 @@
-import { GameObject, getCanvas, Sprite, TileEngine } from 'kontra';
+import { GameObject, Sprite, TileEngine } from 'kontra';
+import calculateCanvasYPosition from '../helpers/calculate-canvas-y-position';
 import collides from '../helpers/collides';
 import Play from '../scenes/play';
 import explodePool from './explode-pool';
@@ -30,14 +31,8 @@ class BuildingPart extends Sprite.class {
     if (!this.parent) return;
     let i = 0;
     while (i < 50) {
-      const y =
-        map.sy >= getCanvas().height / 2
-          ? this.parent.y + this.y + this.height / 2
-          : this.parent.y +
-            this.y +
-            getCanvas().height / 2 -
-            map.sy +
-            this.height / 2;
+      const objectY = this.parent.y + this.y + this.height / 2;
+      const y = calculateCanvasYPosition(map, objectY);
       explodePool.get({
         x: this.parent.x + this.x + this.width / 2,
         y,

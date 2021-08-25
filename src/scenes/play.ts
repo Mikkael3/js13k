@@ -32,8 +32,14 @@ class Play extends Scene.class {
   async createZones(): Promise<void> {
     const zone1ceiling = await loadImage('zone1ceiling.png');
     const zone1wall = await loadImage('zone1wall.png');
+    const zone2ceiling = await loadImage('zone2ceiling.png');
+    const zone2wall = await loadImage('zone2wall.png');
     const zone1 = new Zone(200, 500, 1, zone1ceiling, zone1wall);
+    const zone2 = new Zone(-700, 500, 2, zone2ceiling, zone2wall);
+    const zone3 = new Zone(-1600, 500, 2, zone1ceiling, zone2wall);
     zone1.buildings.forEach((building) => this.addChild(building));
+    zone2.buildings.forEach((building) => this.addChild(building));
+    zone3.buildings.forEach((building) => this.addChild(building));
     zone1.enemies.forEach((enemy) => this.addChild(enemy));
   }
 }
