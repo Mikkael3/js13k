@@ -11,7 +11,8 @@ class Zone {
     private size: number,
     private hp: number,
     public ceiling: HTMLImageElement,
-    public wall: HTMLImageElement
+    public wall: HTMLImageElement,
+    public explodeColors: { color1: string; color2: string }
   ) {
     this.genBuildings();
     this.genEnemies();
@@ -29,7 +30,8 @@ class Zone {
         height,
         this.hp,
         this.ceiling,
-        this.wall
+        this.wall,
+        this.explodeColors
       );
       if (!this.buildings.some((b) => collides(b, building))) {
         this.buildings.push(building);

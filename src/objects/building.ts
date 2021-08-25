@@ -55,7 +55,10 @@ class BuildingPart extends Sprite.class {
         anchor: { x: 0.5, y: 0.5 },
         dx: 2 - Math.random() * 4,
         dy: 2 - Math.random() * 4,
-        color: i % 2 ? 'red' : 'gray',
+        color:
+          i % 2
+            ? this.parent.explodeColors.color1
+            : this.parent.explodeColors.color2,
         maxSize: 100,
         ttl: 120,
       });
@@ -72,7 +75,8 @@ class Building extends GameObject.class {
     height: number,
     public hp: number,
     public ceiling: HTMLImageElement,
-    public wall: HTMLImageElement
+    public wall: HTMLImageElement,
+    public explodeColors: { colors1: string; color2: string }
   ) {
     super({
       x: x,
