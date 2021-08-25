@@ -1,14 +1,21 @@
 import { Sprite, Vector } from 'kontra';
 import Play from '../scenes/play';
+import collides from '../helpers/collides';
 
 class Enemy extends Sprite.class {
-  constructor() {
+  constructor(
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    color: string
+  ) {
     super({
-      x: 0,
-      y: 0,
-      width: 20,
-      height: 20,
-      color: 'red',
+      x: x,
+      y: y,
+      width: width,
+      height: height,
+      color: color,
     });
   }
   update(): void {
@@ -21,8 +28,13 @@ class Enemy extends Sprite.class {
       ).normalize();
       this.dx = direction.x * enemySpeed;
       this.dy = direction.y * enemySpeed;
+
+      if (collides(this.parent.player, this)) {
+        this.parent.removeChild(this);
+      }
+
+      this.advance();
     }
-    this.advance();
   }
 }
 

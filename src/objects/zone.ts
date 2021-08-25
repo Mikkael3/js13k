@@ -41,8 +41,20 @@ class Zone {
   };
 
   genEnemies(): void {
-    const enemy = new Enemy();
-    this.enemies.push(enemy);
+    let amount = 10;
+    while (amount > 0) {
+      const width = 15;
+      const height = 30;
+      const enemy = new Enemy(
+        randInt(0, getCanvas().width),
+        randInt(this.startY - this.size, this.startY),
+        width,
+        height,
+        'brown'
+      );
+      this.enemies.push(enemy);
+      amount--;
+    }
   }
 }
 
