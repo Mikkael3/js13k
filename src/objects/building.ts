@@ -76,7 +76,7 @@ class Building extends GameObject.class {
     public hp: number,
     public ceiling: HTMLImageElement,
     public wall: HTMLImageElement,
-    public explodeColors: { colors1: string; color2: string }
+    public explodeColors: { color1: string; color2: string }
   ) {
     super({
       x: x,
