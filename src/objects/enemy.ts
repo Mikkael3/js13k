@@ -5,6 +5,7 @@ import Projectile from './projectile';
 
 class Enemy extends Sprite.class {
   public cooldownCounter = 0;
+  public standstillCounter = 0;
   constructor(
     x: number,
     y: number,
@@ -13,7 +14,8 @@ class Enemy extends Sprite.class {
     color: string,
     public visionRange = 350,
     public attackRange = 100,
-    public attackCooldown = 60, // frames
+    public attackCooldown = 90, // frames
+    public attackStandStillTime = 30, // After attacking, stand still for a moment
     public attackDamage = 1
   ) {
     super({
@@ -25,14 +27,21 @@ class Enemy extends Sprite.class {
     });
   }
   update(): void {
-    const enemySpeed = 1;
+    const moveSpeed = 1;
     if (this.parent instanceof Play && this.parent.player) {
       const player = this.parent.player;
       const vectorToPlayer = new Vector(player.x - this.x, player.y - this.y);
-      if (vectorToPlayer.length() < this.visionRange) {
-        this.dx = vectorToPlayer.normalize().x * enemySpeed;
-        this.dy = vectorToPlayer.normalize().y * enemySpeed;
+      if (
+        vectorToPlayer.length() < this.visionRange &&
+        this.standstillCounter <= 0
+      ) {
+        const direction = vectorToPlayer.length() < this.attackRange ? -1 : 1;
+        this.dx = vectorToPlayer.normalize().x * moveSpeed * direction;
+        this.dy = vectorToPlayer.normalize().y * moveSpeed * direction;
         this.advance();
+      } else {
+        this.dx = 0;
+        this.dy = 0;
       }
       if (collides(this.parent.player, this)) {
         this.parent.removeChild(this);
@@ -41,9 +50,11 @@ class Enemy extends Sprite.class {
         if (this.cooldownCounter <= 0) {
           this.shoot(vectorToPlayer);
           this.cooldownCounter = this.attackCooldown;
+          this.standstillCounter = this.attackStandStillTime;
         }
       }
       this.cooldownCounter = Math.max(this.cooldownCounter - 1, 0);
+      this.standstillCounter = Math.max(this.standstillCounter - 1, 0);
     }
   }
   shoot(direction: Vector): void {
