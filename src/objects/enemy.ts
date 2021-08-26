@@ -63,7 +63,8 @@ class Enemy extends Sprite.class {
       this.x,
       this.y,
       direction,
-      projectileSpeed
+      projectileSpeed,
+      this.attackDamage
     );
     this.parent?.addChild(projectile);
   }

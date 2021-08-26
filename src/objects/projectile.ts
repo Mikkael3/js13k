@@ -1,4 +1,6 @@
 import { Sprite, Vector } from 'kontra';
+import collides from '../helpers/collides';
+import Play from '../scenes/play';
 
 class Projectile extends Sprite.class {
   constructor(
@@ -6,6 +8,7 @@ class Projectile extends Sprite.class {
     y: number,
     direction: Vector,
     projectileSpeed: number,
+    public damage: number,
     width = 6,
     height = 6,
     color = 'gray'
@@ -16,7 +19,7 @@ class Projectile extends Sprite.class {
       width: width,
       height: height,
       color: color,
-      ttl: 120,
+      ttl: 60,
       dx: direction.normalize().x * projectileSpeed,
       dy: direction.normalize().y * projectileSpeed,
     });
@@ -26,6 +29,13 @@ class Projectile extends Sprite.class {
     this.advance();
     if (!this.isAlive()) {
       this.parent?.removeChild(this);
+    }
+    if (this.parent instanceof Play && this.parent.player) {
+      const player = this.parent.player;
+      if (collides(this, this.parent.player)) {
+        player.takeDamage(this.damage);
+        this.parent?.removeChild(this);
+      }
     }
   }
 }

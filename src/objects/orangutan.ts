@@ -1,6 +1,7 @@
 import { degToRad, keyPressed, Scene, Sprite, TileEngine } from 'kontra';
 
 class Orangutan extends Sprite.class {
+  public health = 100;
   constructor(
     private canvas: HTMLCanvasElement,
     private map: TileEngine,
@@ -108,6 +109,11 @@ class Orangutan extends Sprite.class {
   public handleHardHitBuilding(): void {
     this.dx = 0;
     this.dy = 0;
+  }
+
+  public takeDamage(damage: number): void {
+    this.health -= damage;
+    console.log(this.health); // todo health bar
   }
 }
 
