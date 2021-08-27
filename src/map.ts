@@ -17,9 +17,7 @@ const getLayer = (): number[] => {
     (key: number) => 12 - (key % 2)
   );
 
-  const data = [...Array(10 * 13).keys()].map((key: number) =>
-    key % 5 ? 3 : 2
-  );
+  const data = [...Array(10 * 13).keys()].map(() => 7);
   return [...data, ...zone3Tiles, ...zone2Tiles, ...zone1Tiles, ...jungleTiles];
 };
 

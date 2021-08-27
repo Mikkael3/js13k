@@ -71,6 +71,18 @@ class Play extends Scene.class {
       frameRate: 1,
     });
 
+    const ceiling3 = new Animation({
+      spriteSheet: this.spriteSheet,
+      frames: [5],
+      frameRate: 1,
+    });
+
+    const wall3 = new Animation({
+      spriteSheet: this.spriteSheet,
+      frames: [4],
+      frameRate: 1,
+    });
+
     const zone1 = new Zone(200, 500, 1, ceiling1, wall1, {
       color1: 'yellow',
       color2: 'orange',
@@ -81,7 +93,7 @@ class Play extends Scene.class {
       color2: 'orange',
     });
 
-    const zone3 = new Zone(-1600, 500, 3, ceiling2, wall2, {
+    const zone3 = new Zone(-1600, 500, 3, ceiling3, wall3, {
       color1: 'yellow',
       color2: 'blue',
     });
