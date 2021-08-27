@@ -16,24 +16,22 @@ const main = async (): Promise<void> => {
 
   const map = await getTileMap(tileset);
   const play = new Play(map, spriteSheet);
-  //const orangutan = new Orangutan(getCanvas());
+
   map.addObject(play);
+
   const loop = GameLoop({
-    // create the main game loop
     update: (dt: number) => {
-      // update the game state
       play.update(dt);
       explodePool.update();
     },
     render: () => {
-      // render the game state
       map.render();
       play.render();
       explodePool.render();
     },
   });
 
-  loop.start(); // start the game
+  loop.start();
 };
 
 main();
