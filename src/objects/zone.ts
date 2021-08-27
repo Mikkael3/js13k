@@ -1,4 +1,4 @@
-import { collides, getCanvas, randInt, Animation } from 'kontra';
+import { Animation, collides, getCanvas, randInt } from 'kontra';
 import Building from './building';
 import Enemy from './enemy';
 
