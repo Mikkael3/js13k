@@ -9,8 +9,10 @@ class Orangutan extends Sprite.class {
     sprite: HTMLImageElement
   ) {
     super({
-      x: 390, // starting x,y position of the sprite
-      y: 600,
+      // x: 390,
+      // y: 600,
+      x: 390,
+      y: -2560,
       anchor: { x: 0.5, y: 0.5 },
       image: sprite,
       rotation: 0,

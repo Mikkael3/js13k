@@ -7,6 +7,7 @@ import {
   SpriteSheet,
   TileEngine,
 } from 'kontra';
+import Factory from '../objects/factory';
 import HealthBar from '../objects/health-bar';
 import Orangutan from '../objects/orangutan';
 import Zone from '../objects/zone';
@@ -102,6 +103,7 @@ class Play extends Scene.class {
     zone2.buildings.forEach((building) => this.addChild(building));
     zone3.buildings.forEach((building) => this.addChild(building));
     zone1.enemies.forEach((enemy) => this.addChild(enemy));
+    this.addChild(new Factory(0, -55 * 64 + 640));
   }
 }
 

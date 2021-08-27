@@ -1,59 +1,42 @@
 import { GameObject, Sprite } from 'kontra';
 
-class FactoryCenter extends Sprite.class {
+class FactoryTank extends Sprite.class {
   public hitTime = 0;
-  constructor(x: number, y: number) {
+  constructor(x: number, y: number, color = 'gray', radius = 64) {
     super({
       x: x,
       y: y,
-      width: 256,
-      height: 256,
-      color: 'gray',
+      color,
+      radius,
     });
   }
 
   handleHit = (): void => {
-    // if (this.hp && new Date().getTime() - this.hitTime < 1000) {
-    //   player.handleHardHitBuilding();
-    //   return;
-    // }
-    // if (this.hp === 0) return;
-    // this.hp -= 1;
-    // this.hitTime = new Date().getTime();
-    // if (this.hp === 2) {
-    //   this.opacity = 0.88;
-    //   player.handleHardHitBuilding();
-    // }
-    // if (this.hp === 1) {
-    //   this.opacity = 0.66;
-    //   player.handleHardHitBuilding();
-    // }
-    // if (this.hp === 0) {
-    //   this.opacity = 0.33;
-    //   player.handleHitBuilding();
-    // }
-    // if (!this.parent) return;
-    // let i = 0;
-    // while (i < 50) {
-    //   const objectY = this.parent.y + this.y + this.height / 2;
-    //   const y = calculateCanvasYPosition(map, objectY);
-    //   explodePool.get({
-    //     x: this.parent.x + this.x + this.width / 2,
-    //     y,
-    //     width: 4,
-    //     height: 4,
-    //     anchor: { x: 0.5, y: 0.5 },
-    //     dx: 2 - Math.random() * 4,
-    //     dy: 2 - Math.random() * 4,
-    //     color:
-    //       i % 2
-    //          ? this.parent.explodeColors.color1
-    //         : this.parent.explodeColors.color2,
-    //     maxSize: 100,
-    //     ttl: 120,
-    //   });
-    //   i++;
-    // }
+    //pass
+  };
+
+  render(): void {
+    this.context.fillStyle = this.color;
+    this.context.beginPath();
+    this.context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+    this.context.fill();
+  }
+}
+
+class FactoryCenter extends Sprite.class {
+  public hitTime = 0;
+  constructor(x: number, y: number, color = 'gray', size = 192) {
+    super({
+      x: x,
+      y: y,
+      width: size,
+      height: size,
+      color,
+    });
+  }
+
+  handleHit = (): void => {
+    //pass
   };
 }
 
@@ -62,13 +45,42 @@ class Factory extends GameObject.class {
     super({
       x: x,
       y: y,
+      width: 800,
+      height: 640,
     });
     this.createParts();
   }
 
-  createParts = (): void => {};
+  createParts = (): void => {
+    this.addChild(new FactoryCenter((800 - 192) / 2, (640 - 192) / 2));
 
-  update = (dt: number): void => {};
+    this.addChild(new FactoryCenter((800 - 128) / 2, 322, 'yellow', 64));
+    this.addChild(
+      new FactoryCenter((800 - 128) / 2, (640 - 132) / 2, 'yellow', 64)
+    );
+    this.addChild(new FactoryTank(450, 270, 'black', 32));
+    this.addChild(new FactoryTank(450, 270, 'red', 16));
+
+    this.addChild(new FactoryTank(96, 96));
+    this.addChild(new FactoryTank(96, 96, 'black', 32));
+    this.addChild(new FactoryTank(96, 96, 'red', 16));
+
+    this.addChild(new FactoryTank(800 - 96, 96));
+    this.addChild(new FactoryTank(800 - 96, 96, 'black', 32));
+    this.addChild(new FactoryTank(800 - 96, 96, 'red', 16));
+
+    this.addChild(new FactoryTank(96, 640 - 96));
+    this.addChild(new FactoryTank(96, 640 - 96, 'black', 32));
+    this.addChild(new FactoryTank(96, 640 - 96, 'red', 16));
+
+    this.addChild(new FactoryTank(800 - 96, 640 - 96));
+    this.addChild(new FactoryTank(800 - 96, 640 - 96, 'black', 32));
+    this.addChild(new FactoryTank(800 - 96, 640 - 96, 'red', 16));
+  };
+
+  update = (dt: number): void => {
+    console.log(dt);
+  };
 }
 
 export default Factory;
