@@ -1,6 +1,7 @@
 import { getCanvas, loadImage, Quadtree, Scene, TileEngine } from 'kontra';
 import Orangutan from '../objects/orangutan';
 import Zone from '../objects/zone';
+import HealthBar from '../objects/health-bar';
 
 class Play extends Scene.class {
   public player: Orangutan;
@@ -27,6 +28,9 @@ class Play extends Scene.class {
     this.player = orangutan;
     this.lookAt(orangutan);
     this.addChild(orangutan);
+    const healthBar = new HealthBar(this.player, this.camera);
+    this.addChild(healthBar);
+    console.log(this.camera);
   }
 
   async createZones(): Promise<void> {
