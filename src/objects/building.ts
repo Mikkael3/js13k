@@ -1,4 +1,4 @@
-import { GameObject, Sprite, TileEngine } from 'kontra';
+import { Animation, GameObject, Sprite, TileEngine } from 'kontra';
 import calculateCanvasYPosition from '../helpers/calculate-canvas-y-position';
 import collides from '../helpers/collides';
 import Play from '../scenes/play';
@@ -7,18 +7,13 @@ import Orangutan from './orangutan';
 
 class BuildingPart extends Sprite.class {
   public hitTime = 0;
-  constructor(
-    x: number,
-    y: number,
-    public hp: number,
-    material: HTMLImageElement
-  ) {
+  constructor(x: number, y: number, public hp: number, material: Animation) {
     super({
       x: x,
       y: y,
       width: 64,
       height: 64,
-      image: material,
+      animations: { idle: material },
     });
   }
 
@@ -74,8 +69,8 @@ class Building extends GameObject.class {
     width: number,
     height: number,
     public hp: number,
-    public ceiling: HTMLImageElement,
-    public wall: HTMLImageElement,
+    public ceiling: Animation,
+    public wall: Animation,
     public explodeColors: { color1: string; color2: string }
   ) {
     super({

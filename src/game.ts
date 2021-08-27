@@ -1,4 +1,4 @@
-import { GameLoop, init, initKeys } from 'kontra';
+import { GameLoop, init, initKeys, loadImage, SpriteSheet } from 'kontra';
 import getTileMap from './map';
 import explodePool from './objects/explode-pool';
 import Play from './scenes/play';
@@ -6,8 +6,16 @@ import Play from './scenes/play';
 const main = async (): Promise<void> => {
   init();
   initKeys();
-  const map = await getTileMap();
-  const play = new Play(map);
+  const tileset = await loadImage('tileset.png');
+
+  const spriteSheet = SpriteSheet({
+    image: tileset,
+    frameWidth: 64,
+    frameHeight: 64,
+  });
+
+  const map = await getTileMap(tileset);
+  const play = new Play(map, spriteSheet);
   //const orangutan = new Orangutan(getCanvas());
   map.addObject(play);
   const loop = GameLoop({

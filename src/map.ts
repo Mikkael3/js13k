@@ -1,4 +1,4 @@
-import { loadImage, TileEngine } from 'kontra';
+import { TileEngine } from 'kontra';
 
 const getLayer = (): number[] => {
   const jungleTiles = [...Array(4 * 13).keys()].map((key: number) =>
@@ -23,8 +23,7 @@ const getLayer = (): number[] => {
   return [...data, ...zone3Tiles, ...zone2Tiles, ...zone1Tiles, ...jungleTiles];
 };
 
-const getTileMap = async (): Promise<TileEngine> => {
-  const asset = await loadImage('tileset.png');
+const getTileMap = async (tileset: HTMLImageElement): Promise<TileEngine> => {
   const tileEngineConfig = {
     tilewidth: 64,
     tileheight: 64,
@@ -33,7 +32,7 @@ const getTileMap = async (): Promise<TileEngine> => {
     tilesets: [
       {
         firstgid: 1,
-        image: asset,
+        image: tileset,
       },
     ],
     layers: [

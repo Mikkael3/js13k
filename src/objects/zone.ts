@@ -1,4 +1,4 @@
-import { collides, getCanvas, randInt } from 'kontra';
+import { collides, getCanvas, randInt, Animation } from 'kontra';
 import Building from './building';
 import Enemy from './enemy';
 
@@ -10,8 +10,8 @@ class Zone {
     private startY: number,
     private size: number,
     private hp: number,
-    public ceiling: HTMLImageElement,
-    public wall: HTMLImageElement,
+    public ceiling: Animation,
+    public wall: Animation,
     public explodeColors: { color1: string; color2: string }
   ) {
     this.genBuildings();

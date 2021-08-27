@@ -1,6 +1,6 @@
 import { Sprite, Vector } from 'kontra';
-import Play from '../scenes/play';
 import collides from '../helpers/collides';
+import Play from '../scenes/play';
 import Projectile from './projectile';
 
 class Enemy extends Sprite.class {
@@ -26,6 +26,7 @@ class Enemy extends Sprite.class {
       color: color,
     });
   }
+
   update(): void {
     const moveSpeed = 1;
     if (this.parent instanceof Play && this.parent.player) {
