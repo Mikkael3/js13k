@@ -1,4 +1,7 @@
-import { degToRad, keyPressed, Scene, Sprite, TileEngine } from 'kontra';
+import { degToRad, keyPressed, Sprite, TileEngine } from 'kontra';
+import explodePool from './explode-pool';
+import Play from '../scenes/play';
+import calculateCanvasYPosition from '../helpers/calculate-canvas-y-position';
 
 class Orangutan extends Sprite.class {
   public maxHealth = 20;
@@ -38,6 +41,7 @@ class Orangutan extends Sprite.class {
   update(): void {
     this.handleControls();
     this.syncCamera();
+    this.children.forEach((child) => child.update());
   }
 
   private handleControls(): void {
@@ -112,7 +116,39 @@ class Orangutan extends Sprite.class {
   }
 
   public takeDamage(damage: number): void {
+    const objectY = this.parent.y + this.y;
+    const y = calculateCanvasYPosition(this.parent.map, objectY);
+    for (let i = 0; i < damage + 1; i++) {
+      explodePool.get({
+        x: this.parent.x + this.x,
+        y,
+        width: 4,
+        height: 4,
+        dx: 1 - Math.random() * 2,
+        dy: 1 - Math.random() * 2,
+        color: i % 2 ? 'yellow' : 'gray',
+        ttl: 120,
+      });
+    }
     this.health -= damage;
+
+    const damageHue = new Sprite({
+      x: 0,
+      y: 0,
+      anchor: this.anchor,
+      width: this.width,
+      height: this.height,
+      color: 'red',
+      ttl: 8,
+      opacity: 0.3,
+      update: (): void => {
+        if (!damageHue.isAlive()) {
+          this.removeChild(damageHue);
+        }
+        damageHue.ttl--;
+      },
+    });
+    this.addChild(damageHue);
   }
 }
 
