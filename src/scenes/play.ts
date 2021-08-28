@@ -100,8 +100,10 @@ class Play extends Scene.class {
 
     zone1.buildings.forEach((building) => this.addChild(building));
     zone1.enemies.forEach((enemy) => this.addChild(enemy));
+    zone2.genPoliceEnemies();
     zone2.buildings.forEach((building) => this.addChild(building));
     zone2.enemies.forEach((enemy) => this.addChild(enemy));
+    zone3.genPoliceEnemies();
     zone3.buildings.forEach((building) => this.addChild(building));
     zone3.enemies.forEach((enemy) => this.addChild(enemy));
     this.addChild(new Factory(0, -55 * 64 + 640));

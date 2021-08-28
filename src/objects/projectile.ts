@@ -9,9 +9,9 @@ class Projectile extends Sprite.class {
     direction: Vector,
     projectileSpeed: number,
     public damage: number,
+    color = 'gray',
     width = 6,
-    height = 6,
-    color = 'gray'
+    height = 6
   ) {
     super({
       x: x,

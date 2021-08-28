@@ -16,12 +16,15 @@ class Enemy extends Sprite.class {
     width: number,
     height: number,
     color: string,
+    public moveSpeed = 1,
     public visionRange = 350,
     public attackRange = 100,
     public attackCooldown = 90, // frames
     public attackStandStillTime = 30, // After attacking, stand still for a moment
     public attackWindup = 30, // Windup before attacking
-    public attackDamage = 1
+    public attackDamage = 1,
+    public projectileSpeed = 2,
+    public projectileColor = 'gray'
   ) {
     super({
       x: x,
@@ -33,7 +36,6 @@ class Enemy extends Sprite.class {
   }
 
   update(): void {
-    const moveSpeed = 1;
     const player = this.parent.player;
     if (!player) return;
     if (collides(this.parent.player, this)) {
@@ -55,8 +57,8 @@ class Enemy extends Sprite.class {
       this.standstillCounter <= 0
     ) {
       const direction = vectorToPlayer.length() < this.attackRange ? -1 : 1;
-      this.dx = vectorToPlayer.normalize().x * moveSpeed * direction;
-      this.dy = vectorToPlayer.normalize().y * moveSpeed * direction;
+      this.dx = vectorToPlayer.normalize().x * this.moveSpeed * direction;
+      this.dy = vectorToPlayer.normalize().y * this.moveSpeed * direction;
       this.advance();
     } else {
       this.dx = 0;
@@ -95,13 +97,13 @@ class Enemy extends Sprite.class {
   }
 
   shoot(direction: Vector): void {
-    const projectileSpeed = 2;
     const projectile = new Projectile(
       this.x,
       this.y,
       direction,
-      projectileSpeed,
-      this.attackDamage
+      this.projectileSpeed,
+      this.attackDamage,
+      this.projectileColor
     );
     this.parent?.addChild(projectile);
   }

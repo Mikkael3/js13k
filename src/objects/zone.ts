@@ -56,6 +56,32 @@ class Zone {
       amount--;
     }
   }
+
+  genPoliceEnemies(): void {
+    let amount = 5;
+    while (amount > 0) {
+      const width = 18;
+      const height = 30;
+      const enemy = new Enemy(
+        randInt(0, getCanvas().width),
+        randInt(this.startY - this.size, this.startY),
+        width,
+        height,
+        'blue',
+        0.5,
+        350,
+        200,
+        120,
+        60,
+        60,
+        2,
+        4,
+        'red'
+      );
+      this.enemies.push(enemy);
+      amount--;
+    }
+  }
 }
 
 export default Zone;
