@@ -8,6 +8,7 @@ import calculateCanvasYPosition from '../helpers/calculate-canvas-y-position';
 class Enemy extends Sprite.class {
   public cooldownCounter = 0;
   public standstillCounter = 0;
+  public parent: Play;
   constructor(
     x: number,
     y: number,
@@ -31,51 +32,50 @@ class Enemy extends Sprite.class {
 
   update(): void {
     const moveSpeed = 1;
-    if (this.parent instanceof Play && this.parent.player) {
-      const player = this.parent.player;
-      const vectorToPlayer = new Vector(player.x - this.x, player.y - this.y);
-      if (
-        vectorToPlayer.length() < this.visionRange &&
-        this.standstillCounter <= 0
-      ) {
-        const direction = vectorToPlayer.length() < this.attackRange ? -1 : 1;
-        this.dx = vectorToPlayer.normalize().x * moveSpeed * direction;
-        this.dy = vectorToPlayer.normalize().y * moveSpeed * direction;
-        this.advance();
-      } else {
-        this.dx = 0;
-        this.dy = 0;
-      }
-      if (collides(this.parent.player, this)) {
-        let i = 0;
-        while (i < 20) {
-          const objectY = this.parent.y + this.y + this.height / 2;
-          const y = calculateCanvasYPosition(this.parent.map, objectY);
-          explodePool.get({
-            x: this.parent.x + this.x + this.width / 2,
-            y,
-            width: 4,
-            height: 4,
-            anchor: { x: 0.5, y: 0.5 },
-            dx: (1 - Math.random() * 2) * 0.8,
-            dy: (1 - Math.random() * 2) * 0.8,
-            color: i % 2 ? 'red' : 'darkred',
-            ttl: 25,
-          });
-          i++;
-        }
-        this.parent.removeChild(this);
-      }
-      if (vectorToPlayer.length() < this.attackRange) {
-        if (this.cooldownCounter <= 0) {
-          this.shoot(vectorToPlayer);
-          this.cooldownCounter = this.attackCooldown;
-          this.standstillCounter = this.attackStandStillTime;
-        }
-      }
-      this.cooldownCounter = Math.max(this.cooldownCounter - 1, 0);
-      this.standstillCounter = Math.max(this.standstillCounter - 1, 0);
+
+    const player = this.parent.player;
+    const vectorToPlayer = new Vector(player.x - this.x, player.y - this.y);
+    if (
+      vectorToPlayer.length() < this.visionRange &&
+      this.standstillCounter <= 0
+    ) {
+      const direction = vectorToPlayer.length() < this.attackRange ? -1 : 1;
+      this.dx = vectorToPlayer.normalize().x * moveSpeed * direction;
+      this.dy = vectorToPlayer.normalize().y * moveSpeed * direction;
+      this.advance();
+    } else {
+      this.dx = 0;
+      this.dy = 0;
     }
+    if (collides(this.parent.player, this)) {
+      let i = 0;
+      while (i < 20) {
+        const objectY = this.parent.y + this.y + this.height / 2;
+        const y = calculateCanvasYPosition(this.parent.map, objectY);
+        explodePool.get({
+          x: this.parent.x + this.x + this.width / 2,
+          y,
+          width: 4,
+          height: 4,
+          anchor: { x: 0.5, y: 0.5 },
+          dx: (1 - Math.random() * 2) * 0.8,
+          dy: (1 - Math.random() * 2) * 0.8,
+          color: i % 2 ? 'red' : 'darkred',
+          ttl: 25,
+        });
+        i++;
+      }
+      this.parent.removeChild(this);
+    }
+    if (vectorToPlayer.length() < this.attackRange) {
+      if (this.cooldownCounter <= 0) {
+        this.shoot(vectorToPlayer);
+        this.cooldownCounter = this.attackCooldown;
+        this.standstillCounter = this.attackStandStillTime;
+      }
+    }
+    this.cooldownCounter = Math.max(this.cooldownCounter - 1, 0);
+    this.standstillCounter = Math.max(this.standstillCounter - 1, 0);
   }
   shoot(direction: Vector): void {
     const projectileSpeed = 2;
