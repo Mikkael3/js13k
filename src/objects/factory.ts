@@ -1,26 +1,51 @@
-import { GameObject, Sprite } from 'kontra';
+import { GameObject, Sprite, Text } from 'kontra';
+import collides from '../helpers/collides';
+import Play from '../scenes/play';
+import Orangutan from './orangutan';
 
 class FactoryTank extends Sprite.class {
   public hitTime = 0;
-  constructor(x: number, y: number, color = 'gray', radius = 64) {
+  constructor(
+    x: number,
+    y: number,
+    color = 'gray',
+    size = 128,
+    height?: number
+  ) {
     super({
       x: x,
       y: y,
       color,
-      radius,
+      height: height ? height : size,
+      width: size,
     });
+    this.addChild(
+      new Sprite({ x: 24, y: 24, height: 80, width: 80, color: 'white' })
+    );
+    this.addChild(
+      new Text({
+        x: 32,
+        y: 24,
+        text: 'PALM\nOIL\nTANK',
+        font: '24px fantasy',
+        color: 'red',
+        textAlign: 'center',
+      })
+    );
   }
 
-  handleHit = (): void => {
-    //pass
+  checkHit = (): void => {
+    if (this.parent?.player && collides(this.parent.player, this)) {
+      console.log('hit');
+    }
   };
 
-  render(): void {
-    this.context.fillStyle = this.color;
-    this.context.beginPath();
-    this.context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
-    this.context.fill();
-  }
+  // render(): void {
+  //   this.context.fillStyle = this.color;
+  //   this.context.beginPath();
+  //   this.context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+  //   this.context.fill();
+  // }
 }
 
 class FactoryCenter extends Sprite.class {
@@ -33,14 +58,33 @@ class FactoryCenter extends Sprite.class {
       height: size,
       color,
     });
+    this.addChild(
+      new Sprite({ x: 24, y: 24, height: 80, width: 140, color: 'white' })
+    );
+    this.addChild(
+      new Text({
+        x: 32,
+        y: 24,
+        text: 'PALM\nOIL\nFACTORY',
+        font: '24px fantasy',
+        color: 'red',
+        textAlign: 'center',
+      })
+    );
   }
 
-  handleHit = (): void => {
-    //pass
+  checkHit = (): void => {
+    if (this.parent?.player && collides(this.parent.player, this)) {
+      console.log('hit');
+    }
   };
 }
 
 class Factory extends GameObject.class {
+  public player: Orangutan;
+  public core: FactoryCenter;
+  public tanks: FactoryTank[] = [];
+
   constructor(x: number, y: number) {
     super({
       x: x,
@@ -52,34 +96,33 @@ class Factory extends GameObject.class {
   }
 
   createParts = (): void => {
-    this.addChild(new FactoryCenter((800 - 192) / 2, (640 - 192) / 2));
+    //core
+    this.core = new FactoryCenter((800 - 192) / 2, (640 - 192) / 2);
+    this.addChild(this.core);
 
-    this.addChild(new FactoryCenter((800 - 128) / 2, 322, 'yellow', 64));
-    this.addChild(
-      new FactoryCenter((800 - 128) / 2, (640 - 132) / 2, 'yellow', 64)
-    );
-    this.addChild(new FactoryTank(450, 270, 'black', 32));
-    this.addChild(new FactoryTank(450, 270, 'red', 16));
+    const tank1 = new FactoryTank(64, 64);
+    this.addChild(tank1);
+    this.tanks.push(tank1);
 
-    this.addChild(new FactoryTank(96, 96));
-    this.addChild(new FactoryTank(96, 96, 'black', 32));
-    this.addChild(new FactoryTank(96, 96, 'red', 16));
+    const tank2 = new FactoryTank(800 - 192, 64);
+    this.addChild(tank2);
+    this.tanks.push(tank2);
 
-    this.addChild(new FactoryTank(800 - 96, 96));
-    this.addChild(new FactoryTank(800 - 96, 96, 'black', 32));
-    this.addChild(new FactoryTank(800 - 96, 96, 'red', 16));
+    const tank3 = new FactoryTank(64, 640 - 192);
+    this.addChild(tank3);
+    this.tanks.push(tank3);
 
-    this.addChild(new FactoryTank(96, 640 - 96));
-    this.addChild(new FactoryTank(96, 640 - 96, 'black', 32));
-    this.addChild(new FactoryTank(96, 640 - 96, 'red', 16));
-
-    this.addChild(new FactoryTank(800 - 96, 640 - 96));
-    this.addChild(new FactoryTank(800 - 96, 640 - 96, 'black', 32));
-    this.addChild(new FactoryTank(800 - 96, 640 - 96, 'red', 16));
+    const tank4 = new FactoryTank(800 - 192, 640 - 192);
+    this.addChild(tank4);
+    this.tanks.push(tank4);
   };
 
-  update = (dt: number): void => {
-    console.log(dt);
+  update = (): void => {
+    if (!this.player && this.parent instanceof Play && this.parent.player) {
+      this.player = this.parent.player;
+    }
+    this.tanks.forEach((tank) => tank.checkHit());
+    if (this.core) this.core.checkHit();
   };
 }
 
