@@ -3,6 +3,7 @@ import { degToRad, keyPressed, Scene, Sprite, TileEngine } from 'kontra';
 class Orangutan extends Sprite.class {
   public maxHealth = 20;
   public health = this.maxHealth;
+  public parent: Play;
   constructor(
     private canvas: HTMLCanvasElement,
     private map: TileEngine,
@@ -18,24 +19,20 @@ class Orangutan extends Sprite.class {
       rotation: 0,
     });
     this.map.sy = this.map.mapheight - canvas.height;
-    this.syncCamera();
   }
 
   syncCamera(): void {
-    if (this.parent instanceof Scene) {
-      const startCameraFollow = this.canvas.height / 2;
-      const y = this.y > startCameraFollow ? startCameraFollow : this.y;
-      if (this.map.sy > 0)
-        this.parent.lookAt({ y: y, x: this.canvas.width / 2 });
-      this.map.sx = 16;
-      const sy =
-        this.y > startCameraFollow
-          ? this.map.mapheight - this.canvas.height
-          : this.map.mapheight -
-            this.canvas.height -
-            (startCameraFollow - this.y);
-      this.map.sy = sy > 0 ? sy : 0;
-    }
+    const startCameraFollow = this.canvas.height / 2;
+    const y = this.y > startCameraFollow ? startCameraFollow : this.y;
+    if (this.map.sy > 0) this.parent.lookAt({ y: y, x: this.canvas.width / 2 });
+    this.map.sx = 16;
+    const sy =
+      this.y > startCameraFollow
+        ? this.map.mapheight - this.canvas.height
+        : this.map.mapheight -
+          this.canvas.height -
+          (startCameraFollow - this.y);
+    this.map.sy = sy > 0 ? sy : 0;
   }
 
   update(): void {
