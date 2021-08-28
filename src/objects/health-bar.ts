@@ -19,7 +19,7 @@ class HealthBar extends Sprite.class {
       );
       this.context.fillRect(
         this.context.canvas.width / 2 - this.width / 2,
-        this.camera.y + this.context.canvas.height / 2 - this.height,
+        this.camera.y - this.context.canvas.height / 2 + this.height,
         width,
         this.height
       );
