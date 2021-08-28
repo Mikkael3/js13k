@@ -1,6 +1,8 @@
 import { Pool, Sprite } from 'kontra';
 
-export default Pool({
+const explodePool = Pool({
   create: Sprite,
-  maxSize: 100,
+  maxSize: 200,
 });
+
+export default explodePool;

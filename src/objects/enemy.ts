@@ -2,6 +2,8 @@ import { Sprite, Vector } from 'kontra';
 import collides from '../helpers/collides';
 import Play from '../scenes/play';
 import Projectile from './projectile';
+import explodePool from './explode-pool';
+import calculateCanvasYPosition from '../helpers/calculate-canvas-y-position';
 
 class Enemy extends Sprite.class {
   public cooldownCounter = 0;
@@ -45,6 +47,23 @@ class Enemy extends Sprite.class {
         this.dy = 0;
       }
       if (collides(this.parent.player, this)) {
+        let i = 0;
+        while (i < 20) {
+          const objectY = this.parent.y + this.y + this.height / 2;
+          const y = calculateCanvasYPosition(this.parent.map, objectY);
+          explodePool.get({
+            x: this.parent.x + this.x + this.width / 2,
+            y,
+            width: 4,
+            height: 4,
+            anchor: { x: 0.5, y: 0.5 },
+            dx: (1 - Math.random() * 2) * 0.8,
+            dy: (1 - Math.random() * 2) * 0.8,
+            color: i % 2 ? 'red' : 'darkred',
+            ttl: 25,
+          });
+          i++;
+        }
         this.parent.removeChild(this);
       }
       if (vectorToPlayer.length() < this.attackRange) {

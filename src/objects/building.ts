@@ -54,7 +54,6 @@ class BuildingPart extends Sprite.class {
           i % 2
             ? this.parent.explodeColors.color1
             : this.parent.explodeColors.color2,
-        maxSize: 100,
         ttl: 120,
       });
       i++;
