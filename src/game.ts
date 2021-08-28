@@ -6,7 +6,7 @@ import Play from './scenes/play';
 const main = async (): Promise<void> => {
   init();
   initKeys();
-  const tileset = await loadImage('tileset.png');
+  const tileset = await loadImage('tileset.webp');
 
   const spriteSheet = SpriteSheet({
     image: tileset,
