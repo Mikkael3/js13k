@@ -34,6 +34,7 @@ class Enemy extends Sprite.class {
     const moveSpeed = 1;
 
     const player = this.parent.player;
+    if (!player) return;
     const vectorToPlayer = new Vector(player.x - this.x, player.y - this.y);
     if (
       vectorToPlayer.length() < this.visionRange &&
