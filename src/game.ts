@@ -1,7 +1,16 @@
-import { GameLoop, init, initKeys, loadImage, SpriteSheet } from 'kontra';
+import {
+  GameLoop,
+  init,
+  initKeys,
+  loadImage,
+  SpriteSheet,
+  TileEngine,
+} from 'kontra';
 import getTileMap from './map';
 import explodePool from './objects/explode-pool';
 import Play from './scenes/play';
+
+export const state: { map?: TileEngine } = {};
 
 const main = async (): Promise<void> => {
   init();
@@ -15,6 +24,7 @@ const main = async (): Promise<void> => {
   });
 
   const map = await getTileMap(tileset);
+  state['map'] = map;
   const play = new Play(map, spriteSheet);
 
   map.addObject(play);

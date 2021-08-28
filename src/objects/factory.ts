@@ -1,9 +1,11 @@
 import { GameObject, Sprite, Text } from 'kontra';
 import collides from '../helpers/collides';
 import Play from '../scenes/play';
+import { getExplosion } from './explode-pool';
 import Orangutan from './orangutan';
 
 class FactoryTank extends Sprite.class {
+  public parent: Factory;
   public hitTime = 0;
   constructor(
     x: number,
@@ -36,7 +38,7 @@ class FactoryTank extends Sprite.class {
 
   checkHit = (): void => {
     if (this.parent?.player && collides(this.parent.player, this)) {
-      console.log('hit');
+      getExplosion(this);
     }
   };
 
@@ -75,7 +77,7 @@ class FactoryCenter extends Sprite.class {
 
   checkHit = (): void => {
     if (this.parent?.player && collides(this.parent.player, this)) {
-      console.log('hit');
+      getExplosion(this);
     }
   };
 }

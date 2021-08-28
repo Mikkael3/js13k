@@ -7,6 +7,7 @@ import Orangutan from './orangutan';
 
 class BuildingPart extends Sprite.class {
   public hitTime = 0;
+
   constructor(x: number, y: number, public hp: number, material: Animation) {
     super({
       x: x,
