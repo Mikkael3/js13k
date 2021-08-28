@@ -39,20 +39,14 @@ class FactoryTank extends Sprite.class {
   checkHit = (): void => {
     if (this.parent?.player && collides(this.parent.player, this)) {
       getExplosion(this);
+      this.parent.removeChild(this);
     }
   };
-
-  // render(): void {
-  //   this.context.fillStyle = this.color;
-  //   this.context.beginPath();
-  //   this.context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
-  //   this.context.fill();
-  // }
 }
 
 class FactoryCenter extends Sprite.class {
   public hitTime = 0;
-  constructor(x: number, y: number, color = 'gray', size = 192) {
+  constructor(x: number, y: number, color = 'gray', size = 256) {
     super({
       x: x,
       y: y,
@@ -61,11 +55,11 @@ class FactoryCenter extends Sprite.class {
       color,
     });
     this.addChild(
-      new Sprite({ x: 24, y: 24, height: 80, width: 140, color: 'white' })
+      new Sprite({ x: 64, y: 24, height: 80, width: 140, color: 'white' })
     );
     this.addChild(
       new Text({
-        x: 32,
+        x: 76,
         y: 24,
         text: 'PALM\nOIL\nFACTORY',
         font: '24px fantasy',
@@ -78,6 +72,7 @@ class FactoryCenter extends Sprite.class {
   checkHit = (): void => {
     if (this.parent?.player && collides(this.parent.player, this)) {
       getExplosion(this);
+      this.parent.removeChild(this);
     }
   };
 }
@@ -99,24 +94,16 @@ class Factory extends GameObject.class {
 
   createParts = (): void => {
     //core
-    this.core = new FactoryCenter((800 - 192) / 2, (640 - 192) / 2);
+    this.core = new FactoryCenter(400 - 128, 8);
     this.addChild(this.core);
 
-    const tank1 = new FactoryTank(64, 64);
+    const tank1 = new FactoryTank(416, 320);
     this.addChild(tank1);
     this.tanks.push(tank1);
 
-    const tank2 = new FactoryTank(800 - 192, 64);
+    const tank2 = new FactoryTank(400 - 144, 320);
     this.addChild(tank2);
     this.tanks.push(tank2);
-
-    const tank3 = new FactoryTank(64, 640 - 192);
-    this.addChild(tank3);
-    this.tanks.push(tank3);
-
-    const tank4 = new FactoryTank(800 - 192, 640 - 192);
-    this.addChild(tank4);
-    this.tanks.push(tank4);
   };
 
   update = (): void => {

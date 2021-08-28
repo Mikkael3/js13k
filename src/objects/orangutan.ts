@@ -1,22 +1,21 @@
 import { degToRad, keyPressed, Sprite, TileEngine } from 'kontra';
-import explodePool from './explode-pool';
-import Play from '../scenes/play';
 import calculateCanvasYPosition from '../helpers/calculate-canvas-y-position';
+import Play from '../scenes/play';
+import explodePool from './explode-pool';
 
 class Orangutan extends Sprite.class {
   public maxHealth = 20;
   public health = this.maxHealth;
   public parent: Play;
+
   constructor(
     private canvas: HTMLCanvasElement,
     private map: TileEngine,
     sprite: HTMLImageElement
   ) {
     super({
-      // x: 390,
-      // y: 600,
       x: 390,
-      y: -2560,
+      y: 600,
       anchor: { x: 0.5, y: 0.5 },
       image: sprite,
       rotation: 0,
