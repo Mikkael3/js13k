@@ -39,7 +39,6 @@ class Play extends Scene.class {
     this.addChild(orangutan);
     const healthBar = new HealthBar(this.player, this.camera);
     this.addChild(healthBar);
-    console.log(this.camera);
   }
 
   async createZones(): Promise<void> {
