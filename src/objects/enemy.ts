@@ -4,6 +4,7 @@ import Play from '../scenes/play';
 import Projectile from './projectile';
 import explodePool from './explode-pool';
 import calculateCanvasYPosition from '../helpers/calculate-canvas-y-position';
+import Building from './building';
 
 class Enemy extends Sprite.class {
   public cooldownCounter = 0;
@@ -42,6 +43,7 @@ class Enemy extends Sprite.class {
       this.handleBulldozerCollision();
       return;
     }
+    this.handleBuildingCollision();
     const vectorToPlayer = new Vector(player.x - this.x, player.y - this.y);
     if (this.attackWindupCounter > 0) {
       if (this.attackWindupCounter >= this.attackWindup) {
@@ -106,6 +108,41 @@ class Enemy extends Sprite.class {
       this.projectileColor
     );
     this.parent?.addChild(projectile);
+  }
+
+  handleBuildingCollision(): void {
+    const nearbyObjects = this.parent.quadtree.get(this);
+    nearbyObjects.forEach((building) => {
+      if (!(building instanceof Building)) return;
+      if (collides(this, building)) {
+        let xOffset = 0;
+        if (this.x + this.width / 2 < building.x + building.width / 2) {
+          // On left side of the building
+          xOffset = this.x + this.width - building.x;
+        } else {
+          // On right side of the building
+          xOffset = this.x - building.x - building.width;
+        }
+
+        let yOffset = 0;
+        if (this.y + this.height / 2 < building.y + building.height / 2) {
+          // Above the building
+          yOffset = this.y + this.height - building.y;
+        } else {
+          // Below the building
+          yOffset = this.y - building.y - building.height;
+        }
+
+        if (Math.abs(xOffset) < Math.abs(yOffset)) {
+          this.x -= xOffset;
+        } else {
+          this.y -= yOffset;
+        }
+
+        return;
+      }
+      return;
+    });
   }
 }
 
