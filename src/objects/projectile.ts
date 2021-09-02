@@ -10,19 +10,32 @@ class Projectile extends Sprite.class {
     projectileSpeed: number,
     public damage: number,
     color = 'gray',
-    width = 6,
-    height = 6
+    public radius = 4.5
   ) {
     super({
       x: x,
       y: y,
-      width: width,
-      height: height,
+      width: radius,
+      height: radius,
       color: color,
       ttl: 60,
       dx: direction.normalize().x * projectileSpeed,
       dy: direction.normalize().y * projectileSpeed,
     });
+  }
+
+  // Shape is circle but collision is still rectangle
+  draw(): void {
+    const borderWidth = 0.8;
+    this.context.fillStyle = 'black';
+    this.context.beginPath();
+    this.context.arc(0, 0, this.radius, 0, 2 * Math.PI);
+    this.context.fill();
+
+    this.context.fillStyle = this.color;
+    this.context.beginPath();
+    this.context.arc(0, 0, this.radius - borderWidth, 0, 2 * Math.PI);
+    this.context.fill();
   }
 
   update(): void {
