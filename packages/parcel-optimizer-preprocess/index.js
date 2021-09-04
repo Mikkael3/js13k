@@ -39,9 +39,9 @@ module.exports = new plugin.Optimizer({
         image: true,
       },
     };
-    // contents = pp.preprocess(contents, flatten(context), {
-    //   type: 'js',
-    // });
-    return { contents: contents, map: contents };
+    contents = pp.preprocess(contents, flatten(context), {
+      type: 'js',
+    });
+    return { contents: contents, map, bundle };
   },
 });
