@@ -1,10 +1,10 @@
 import { Animation, GameObject, Sprite, TileEngine } from 'kontra';
 import calculateCanvasYPosition from '../helpers/calculate-canvas-y-position';
 import collides from '../helpers/collides';
+import { createBasicEnemy } from '../helpers/enemy-factory';
 import Play from '../scenes/play';
 import explodePool from './explode-pool';
 import Orangutan from './orangutan';
-import { createBasicEnemy } from '../helpers/enemy-factory';
 
 class BuildingPart extends Sprite.class {
   public hitTime = 0;

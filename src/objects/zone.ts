@@ -1,7 +1,7 @@
 import { Animation, collides, getCanvas, randInt } from 'kontra';
+import { createBasicEnemy, createPolice } from '../helpers/enemy-factory';
 import Building from './building';
 import Enemy from './enemy';
-import { createBasicEnemy, createPolice } from '../helpers/enemy-factory';
 
 class Zone {
   private buildingAmount = 33;
@@ -9,7 +9,6 @@ class Zone {
   public enemies: Enemy[] = [];
   constructor(
     private startY: number,
-    private size: number,
     private hp: number,
     public ceiling: Animation,
     public wall: Animation,
@@ -17,6 +16,7 @@ class Zone {
   ) {
     this.genBuildings();
     this.genEnemies();
+    if (startY < 0) this.genEnemies(true);
   }
 
   genBuildings = (): void => {
@@ -26,7 +26,7 @@ class Zone {
       const height = randInt(1, 3);
       const building = new Building(
         randInt(0, getCanvas().width - width * 64),
-        randInt(this.startY - this.size, this.startY),
+        randInt(this.startY - 500, this.startY),
         width,
         height,
         this.hp,
@@ -41,23 +41,12 @@ class Zone {
     }
   };
 
-  genEnemies(): void {
+  genEnemies(police = false): void {
     let amount = 10;
     while (amount > 0) {
       const x = randInt(0, getCanvas().width);
-      const y = randInt(this.startY - this.size, this.startY);
-      const enemy = createBasicEnemy(x, y);
-      this.enemies.push(enemy);
-      amount--;
-    }
-  }
-
-  genPoliceEnemies(): void {
-    let amount = 5;
-    while (amount > 0) {
-      const x = randInt(0, getCanvas().width);
-      const y = randInt(this.startY - this.size, this.startY);
-      const enemy = createPolice(x, y);
+      const y = randInt(this.startY - 500, this.startY);
+      const enemy = police ? createPolice(x, y) : createBasicEnemy(x, y);
       this.enemies.push(enemy);
       amount--;
     }

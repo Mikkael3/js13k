@@ -1,10 +1,10 @@
 import Enemy from '../objects/enemy';
 
-function createBasicEnemy(x: number, y: number): Enemy {
+const createBasicEnemy = (x: number, y: number): Enemy => {
   return new Enemy(x, y, 15, 30, 'brown');
-}
+};
 
-function createPolice(x: number, y: number): Enemy {
+const createPolice = (x: number, y: number): Enemy => {
   return new Enemy(
     x,
     y,
@@ -21,6 +21,6 @@ function createPolice(x: number, y: number): Enemy {
     4,
     'red'
   );
-}
+};
 
 export { createPolice, createBasicEnemy };
