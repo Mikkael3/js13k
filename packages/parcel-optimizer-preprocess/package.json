@@ -1,5 +1,5 @@
 {
-  "name": "parcel-transformer-preprocess",
+  "name": "parcel-optimizer-preprocess",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
