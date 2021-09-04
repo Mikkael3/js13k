@@ -22,7 +22,7 @@ class Title extends Scene.class {
       new Text({
         x: 270,
         y: 24,
-        text: 'Livint Space Wars\nOrangutan strikes back',
+        text: 'Living Space Wars\nOrangutan strikes back',
         font: '24px fantasy',
         color: 'red',
         textAlign: 'center',
@@ -33,7 +33,7 @@ class Title extends Scene.class {
       new Text({
         x: 250,
         y: 200,
-        text: '<Press any button to start>',
+        text: '<Press ENTER to start>',
         font: '24px fantasy',
         color: 'red',
         textAlign: 'center',
