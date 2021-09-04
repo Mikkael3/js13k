@@ -4,6 +4,7 @@ import collides from '../helpers/collides';
 import Play from '../scenes/play';
 import explodePool from './explode-pool';
 import Orangutan from './orangutan';
+import { createBasicEnemy } from '../helpers/enemy-factory';
 
 class BuildingPart extends Sprite.class {
   public hitTime = 0;
@@ -94,6 +95,11 @@ class Building extends GameObject.class {
   update = (dt: number): void => {
     if (this.parent instanceof Play && this.parent.player) {
       if (this.children.every((child) => child.hp <= 0)) {
+        const enemy = createBasicEnemy(this.x + this.width / 2, this.y);
+        // Stop enemy for a second after spawning
+        enemy.cooldownCounter = 60;
+        enemy.standstillCounter = 60;
+        this.parent.addChild(enemy);
         this.parent.removeChild(this);
         return;
       }

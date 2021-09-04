@@ -1,6 +1,7 @@
 import { Animation, collides, getCanvas, randInt } from 'kontra';
 import Building from './building';
 import Enemy from './enemy';
+import { createBasicEnemy, createPolice } from '../helpers/enemy-factory';
 
 class Zone {
   private buildingAmount = 33;
@@ -43,15 +44,9 @@ class Zone {
   genEnemies(): void {
     let amount = 10;
     while (amount > 0) {
-      const width = 15;
-      const height = 30;
-      const enemy = new Enemy(
-        randInt(0, getCanvas().width),
-        randInt(this.startY - this.size, this.startY),
-        width,
-        height,
-        'brown'
-      );
+      const x = randInt(0, getCanvas().width);
+      const y = randInt(this.startY - this.size, this.startY);
+      const enemy = createBasicEnemy(x, y);
       this.enemies.push(enemy);
       amount--;
     }
@@ -60,24 +55,9 @@ class Zone {
   genPoliceEnemies(): void {
     let amount = 5;
     while (amount > 0) {
-      const width = 18;
-      const height = 30;
-      const enemy = new Enemy(
-        randInt(0, getCanvas().width),
-        randInt(this.startY - this.size, this.startY),
-        width,
-        height,
-        'blue',
-        0.5,
-        350,
-        200,
-        120,
-        60,
-        60,
-        2,
-        4,
-        'red'
-      );
+      const x = randInt(0, getCanvas().width);
+      const y = randInt(this.startY - this.size, this.startY);
+      const enemy = createPolice(x, y);
       this.enemies.push(enemy);
       amount--;
     }
