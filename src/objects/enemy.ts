@@ -1,10 +1,9 @@
-import { Sprite, Vector } from 'kontra';
+import { GameObject, Sprite, Vector } from 'kontra';
+import calculateCanvasYPosition from '../helpers/calculate-canvas-y-position';
 import collides from '../helpers/collides';
 import Play from '../scenes/play';
-import Projectile from './projectile';
 import explodePool from './explode-pool';
-import calculateCanvasYPosition from '../helpers/calculate-canvas-y-position';
-import Building from './building';
+import Projectile from './projectile';
 
 class Enemy extends Sprite.class {
   public cooldownCounter = 0;
@@ -111,9 +110,11 @@ class Enemy extends Sprite.class {
   }
 
   handleBuildingCollision(): void {
-    const nearbyObjects = this.parent.quadtree.get(this);
+    const nearbyObjects: GameObject[] = this.parent.quadtree.get(
+      this
+    ) as GameObject[];
     nearbyObjects.forEach((building) => {
-      if (!(building instanceof Building)) return;
+      if (!building) return;
       if (collides(this, building)) {
         let xOffset = 0;
         if (this.x + this.width / 2 < building.x + building.width / 2) {

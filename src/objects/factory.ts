@@ -1,6 +1,5 @@
 import { GameObject, Sprite, Text } from 'kontra';
 import collides from '../helpers/collides';
-import Play from '../scenes/play';
 import { getExplosion } from './explode-pool';
 import Orangutan from './orangutan';
 
@@ -107,7 +106,7 @@ class Factory extends GameObject.class {
   };
 
   update = (): void => {
-    if (!this.player && this.parent instanceof Play && this.parent.player) {
+    if (this.parent?.player) {
       this.player = this.parent.player;
     }
     this.tanks.forEach((tank) => tank.checkHit());

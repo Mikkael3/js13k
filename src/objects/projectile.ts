@@ -1,6 +1,5 @@
 import { Sprite, Vector } from 'kontra';
 import collides from '../helpers/collides';
-import Play from '../scenes/play';
 
 class Projectile extends Sprite.class {
   constructor(
@@ -43,7 +42,7 @@ class Projectile extends Sprite.class {
     if (!this.isAlive()) {
       this.parent?.removeChild(this);
     }
-    if (this.parent instanceof Play && this.parent.player) {
+    if (this.parent?.player) {
       const player = this.parent.player;
       if (collides(this, this.parent.player)) {
         player.takeDamage(this.damage);

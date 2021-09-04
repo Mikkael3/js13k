@@ -1,7 +1,6 @@
 import { Animation, GameObject, Sprite, TileEngine } from 'kontra';
 import calculateCanvasYPosition from '../helpers/calculate-canvas-y-position';
 import collides from '../helpers/collides';
-import Play from '../scenes/play';
 import explodePool from './explode-pool';
 import Orangutan from './orangutan';
 
@@ -92,7 +91,7 @@ class Building extends GameObject.class {
   };
 
   update = (dt: number): void => {
-    if (this.parent instanceof Play && this.parent.player) {
+    if (this.parent?.removeChild) {
       if (this.children.every((child) => child.hp <= 0)) {
         this.parent.removeChild(this);
         return;
@@ -101,7 +100,7 @@ class Building extends GameObject.class {
         const parent = this.parent;
         if (!parent) return;
         this.children.forEach((child) => {
-          if (child instanceof BuildingPart) {
+          if (child.handleHit) {
             if (collides(child, parent.player)) {
               child.handleHit(parent.map, dt, parent.player);
             }

@@ -5,7 +5,7 @@
     "rootDir": "src",
     "strictNullChecks": true,
     "esModuleInterop": true,
-    "outDir": "dist",
+    "outDir": "testi",
     "sourceMap": false
   },
   "include": [
