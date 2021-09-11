@@ -8,13 +8,12 @@
     "build": "parcel build index.html --no-source-maps",
     "zip": "zip -r game.zip dist",
     "clear": "rm -rf dist/*.js; rm -rf dist/*.map; rm -rf .cache; rm game.zip; ",
-    "build-zip": " npm run clear; npm run build; npm run zip"
+    "build-zip": "npm run clear;node process-kontra.js;npm run build; npm run zip"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "kontra": "^7.3.1",
-    "preprocess": "https://github.com/straker/preprocess"
+    "kontra": "^7.3.1"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.34.0",
@@ -25,6 +24,7 @@
     "parcel": "^2.0.0-rc.0",
     "prettier": "^2.1.2",
     "tslib": "^2.1.0",
-    "typescript": "^4.2.3"
+    "typescript": "^4.2.3",
+    "preprocess": "https://github.com/straker/preprocess"
   }
 }

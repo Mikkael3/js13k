@@ -39,7 +39,16 @@ const main = () => {
   };
   const result = pp.preprocess(code, flatten(context), { type: 'js' });
 
-  fs.writeFileSync('node_modules/kontra/kontra.mjs', result);
+  const file = 'node_modules/kontra/kontra.mjs';
+  if (fs.existsSync(file + '.bak')) {
+    console.log('Overriding kontra.mjs with backup: ' + file + '.bak');
+    fs.copyFileSync(file + '.bak', file);
+  } else {
+    console.log('Creating backup: ' + file + '.bak');
+    fs.copyFileSync(file, file + '.bak');
+  }
+
+  fs.writeFileSync(file, result);
 };
 
 main();
