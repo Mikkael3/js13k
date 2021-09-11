@@ -15,6 +15,16 @@ const flatten = (obj, prefix = '') => {
 };
 
 const main = () => {
+  const file = 'node_modules/kontra/kontra.mjs';
+
+  if (fs.existsSync(file + '.bak')) {
+    console.log('Overriding kontra.mjs with backup: ' + file + '.bak');
+    fs.copyFileSync(file + '.bak', file);
+  } else {
+    console.log('Creating backup: ' + file + '.bak');
+    fs.copyFileSync(file, file + '.bak');
+  }
+
   const code = fs.readFileSync('node_modules/kontra/kontra.mjs').toString();
 
   const context = {
@@ -27,6 +37,7 @@ const main = () => {
       rotation: true,
       ttl: true,
       velocity: true,
+      scale: true,
     },
     vector: {
       length: true,
@@ -36,17 +47,12 @@ const main = () => {
       image: true,
       animation: true,
     },
+    text: {
+      newline: true,
+      textAlign: true,
+    },
   };
   const result = pp.preprocess(code, flatten(context), { type: 'js' });
-
-  const file = 'node_modules/kontra/kontra.mjs';
-  if (fs.existsSync(file + '.bak')) {
-    console.log('Overriding kontra.mjs with backup: ' + file + '.bak');
-    fs.copyFileSync(file + '.bak', file);
-  } else {
-    console.log('Creating backup: ' + file + '.bak');
-    fs.copyFileSync(file, file + '.bak');
-  }
 
   fs.writeFileSync(file, result);
 };
