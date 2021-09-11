@@ -14,7 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "kontra": "^7.3.1",
-    "preprocess": "^3.2.0"
+    "preprocess": "https://github.com/straker/preprocess"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.34.0",

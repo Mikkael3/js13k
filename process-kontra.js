@@ -36,10 +36,6 @@ const main = () => {
       image: true,
       animation: true,
     },
-    text: {
-      newline: true,
-      textAlign: true,
-    },
   };
   const result = pp.preprocess(code, flatten(context), { type: 'js' });
 
