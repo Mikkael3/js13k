@@ -4,7 +4,7 @@ import Play from '../scenes/play';
 import explodePool from './explode-pool';
 
 class Orangutan extends Sprite.class {
-  public maxHealth = 20;
+  public maxHealth = 40;
   public health = this.maxHealth;
   public parent: Play;
 
