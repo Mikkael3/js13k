@@ -26,7 +26,6 @@ export const getExplosion = (
   }
 ): void => {
   if (!state.map) return;
-  console.log(explosionArgs);
   const pos = object.world;
   const { offsetY = 0, offsetX = 0 } = explosionArgs;
   explodePool.get({
