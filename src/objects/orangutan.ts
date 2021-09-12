@@ -1,6 +1,5 @@
 import { degToRad, keyPressed, Sprite, TileEngine } from 'kontra';
 import Play from '../scenes/play';
-import { getExplosion } from './explode-pool';
 
 class Orangutan extends Sprite.class {
   public maxHealth = 40;
@@ -114,14 +113,6 @@ class Orangutan extends Sprite.class {
   }
 
   public takeDamage(damage: number): void {
-    for (let i = 0; i < damage + 1; i++) {
-      getExplosion(this, {
-        color: i % 2 ? 'yellow' : 'gray',
-        ttl: 25,
-        offsetY: -this.height / 2,
-        offsetX: -this.height / 2,
-      });
-    }
     this.health -= damage;
     if (this.health <= 0) this.parent.showTitle();
 
