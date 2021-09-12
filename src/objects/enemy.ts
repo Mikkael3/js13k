@@ -85,6 +85,7 @@ class Enemy extends Sprite.class {
       });
       i++;
     }
+    this.parent.addHumanScore();
     this.parent.removeChild(this);
   }
 

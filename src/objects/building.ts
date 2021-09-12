@@ -86,6 +86,7 @@ class Building extends GameObject.class {
         enemy.cooldownCounter = 60;
         enemy.standstillCounter = 60;
         this.parent.addChild(enemy);
+        this.parent.addBuildingScore(this.children.length);
         this.parent.removeChild(this);
         return;
       }
