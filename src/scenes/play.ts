@@ -10,16 +10,18 @@ import {
   Text,
   TileEngine,
 } from 'kontra';
+import { createPolice } from '../helpers/enemy-factory';
+import Building from '../objects/building';
 import Factory from '../objects/factory';
 import HealthBar from '../objects/health-bar';
 import Orangutan from '../objects/orangutan';
 import Zone from '../objects/zone';
-import { createBasicEnemy, createPolice } from '../helpers/enemy-factory';
-import Building from '../objects/building';
 
 class Play extends Scene.class {
   public player: Orangutan;
   public title = true;
+  public end = false;
+
   constructor(public map: TileEngine, public spriteSheet: SpriteSheet) {
     super({
       id: 'play',
@@ -78,9 +80,54 @@ class Play extends Scene.class {
     this.addChild(title);
   }
 
+  showEnd(): void {
+    this.end = true;
+    this.children = [];
+    this.map.sy = 0;
+    this.map.sx = 0;
+    this.x = 0;
+    this.y = 0;
+
+    const title = new GameObject({ x: 0, y: 0 });
+    this.lookAt({ x: 400, y: 320 });
+    title.addChild(
+      new Sprite({
+        x: 0,
+        y: 0,
+        width: 800,
+        height: 640,
+        color: 'black',
+      })
+    );
+
+    const textopts = {
+      font: '60px fantasy',
+      color: 'red',
+      textAlign: 'center',
+    };
+
+    const text = (x: number, y: number, text: string): void =>
+      title.addChild(
+        new Text({
+          x,
+          y,
+          text,
+          ...textopts,
+        })
+      );
+
+    text(120, 24, 'The END');
+    text(120, 200, '<Press SPACE to start>');
+
+    this.addChild(title);
+  }
+
   update(dt?: number): void {
     super.update(dt);
-    if (this.title && keyPressed('enter')) {
+    if (this.end && keyPressed('space')) {
+      this.showTitle();
+      this.end = false;
+    } else if (this.title && keyPressed('enter')) {
       this.start();
       this.title = false;
     }

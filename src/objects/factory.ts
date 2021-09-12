@@ -76,6 +76,7 @@ class FactoryCenter extends Sprite.class {
       for (let i = 0; i < 60; i++) {
         getExplosion(this);
       }
+      this.parent.showEnd();
       this.parent.removeChild(this);
     }
   };
@@ -116,6 +117,10 @@ class Factory extends GameObject.class {
     }
     this.tanks.forEach((tank) => tank.checkHit());
     if (this.core) this.core.checkHit();
+  };
+
+  showEnd = (): void => {
+    this.parent?.showEnd();
   };
 }
 
