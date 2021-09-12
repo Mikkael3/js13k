@@ -18,9 +18,8 @@ class Play extends Scene.class {
   public player: Orangutan;
   public title = true;
   public end = false;
-  public humansKilled = 0;
-  public buildingPartsDestroyed = 0;
-  public score = 0;
+  public humansKilled: number;
+  public buildingPartsDestroyed: number;
 
   constructor(public map: TileEngine, public spriteSheet: SpriteSheet) {
     super({
@@ -30,21 +29,17 @@ class Play extends Scene.class {
     this.showTitle();
   }
 
-  updateScore(): void {
-    this.score = this.humansKilled + this.buildingPartsDestroyed * 100;
-  }
-
   addBuildingScore(partCount: number): void {
     this.buildingPartsDestroyed += partCount;
-    this.updateScore();
   }
 
   addHumanScore(): void {
     this.humansKilled += 1;
-    this.updateScore();
   }
 
   start(): void {
+    this.buildingPartsDestroyed = 0;
+    this.humansKilled = 0;
     this.children.map((child) => {
       this.removeChild(child);
     });
