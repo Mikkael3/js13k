@@ -25,6 +25,7 @@ class Orangutan extends Sprite.class {
   syncCamera(): void {
     const startCameraFollow = this.canvas.height / 2;
     const y = this.y > startCameraFollow ? startCameraFollow : this.y;
+    if (this.y - this.canvas.height / 2 > this.parent.sy) return;
     if (this.map.sy > 0) this.parent.lookAt({ y: y, x: this.canvas.width / 2 });
     this.map.sx = 16;
     const sy =
@@ -96,6 +97,10 @@ class Orangutan extends Sprite.class {
       this.y = 600;
     }
 
+    if (this.parent.sy + this.canvas.height - 20 < this.y) {
+      this.y = this.parent.sy + this.canvas.height - 20;
+      this.dy = 0;
+    }
     this.advance();
     // Cap max speed
     this.dy =

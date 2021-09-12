@@ -28,7 +28,6 @@ class Play extends Scene.class {
 
   start(): void {
     this.children.map((child) => {
-      console.log(child);
       this.removeChild(child);
     });
     this.createPlayer();
