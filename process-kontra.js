@@ -48,6 +48,7 @@ const main = () => {
       animation: true,
     },
     text: {
+      rtl: true,
       newline: true,
       textAlign: true,
     },
