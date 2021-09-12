@@ -5,7 +5,7 @@
   "scripts": {
     "parcel": "parcel --help",
     "dev": "parcel index.html",
-    "build": "parcel build index.html --no-source-maps",
+    "build": "parcel build index.html --no-source-maps  --public-url ./",
     "zip": "zip -r -9 -j game.zip dist/*.js dist/index.html dist/bulldozer.png dist/tileset.webp",
     "clear": "rm -rf dist/*.js; rm -rf dist/*.map; rm -rf .cache; rm game.zip; ",
     "build-zip": "npm run clear;node process-kontra.js;npm run build; npm run zip; du -b game.zip; npm run move-kontra-bak",
