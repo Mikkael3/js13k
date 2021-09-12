@@ -1,7 +1,7 @@
 import { GameObject, Sprite, Text } from 'kontra';
 
 class Screen extends GameObject.class {
-  public offsetY = 20;
+  public o = 20;
   constructor(texts: string[], textSize = 60) {
     super({ x: 0, y: 0 });
     this.addChild(
@@ -25,8 +25,8 @@ class Screen extends GameObject.class {
       color: color,
       textAlign: 'center',
     });
-    label.y = this.offsetY;
-    this.offsetY += label.height;
+    label.y = this.o;
+    this.o += label.height;
     label.x = (800 - label.width) / 2;
     this.addChild(label);
   };

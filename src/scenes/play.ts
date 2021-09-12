@@ -15,11 +15,11 @@ import Screen from '../objects/screen';
 import Zone from '../objects/zone';
 
 class Play extends Scene.class {
-  public player: Orangutan;
-  public title = true;
-  public end = false;
-  public humansKilled: number;
-  public squaresDestroyed: number;
+  public p: Orangutan;
+  public t = true;
+  public e = false;
+  public h: number;
+  public s: number;
 
   constructor(public map: TileEngine, public spriteSheet: SpriteSheet) {
     super({
@@ -30,16 +30,16 @@ class Play extends Scene.class {
   }
 
   addBuildingScore(partCount: number): void {
-    this.squaresDestroyed += partCount;
+    this.s += partCount;
   }
 
   addHumanScore(): void {
-    this.humansKilled += 1;
+    this.h += 1;
   }
 
   start(): void {
-    this.squaresDestroyed = 0;
-    this.humansKilled = 0;
+    this.s = 0;
+    this.h = 0;
     this.children.map((child) => {
       this.removeChild(child);
     });
@@ -53,7 +53,7 @@ class Play extends Scene.class {
     this.map.sx = 0;
     this.x = 0;
     this.y = 0;
-    this.title = true;
+    this.t = true;
     this.lookAt({ x: 400, y: 320 });
 
     const title = new Screen([
@@ -65,7 +65,7 @@ class Play extends Scene.class {
   }
 
   showEnd(): void {
-    this.end = true;
+    this.e = true;
     this.children = [];
     this.map.sy = 0;
     this.map.sx = 0;
@@ -77,9 +77,9 @@ class Play extends Scene.class {
       [
         'The END',
         `You destroyed ${
-          this.squaresDestroyed * 100
+          this.s * 100
         } m2 of human living space.\nHuman population was reduced by ${
-          this.humansKilled
+          this.h
         }.\n`,
         '2000 to 3000 orangutans are killed every year.',
         'Orangutans could be extinct\nin the wild in less than 50 years.',
@@ -94,19 +94,19 @@ class Play extends Scene.class {
 
   update(dt?: number): void {
     super.update(dt);
-    if (this.end && keyPressed('space')) {
+    if (this.e && keyPressed('space')) {
       this.showTitle();
-      this.end = false;
-    } else if (this.title && keyPressed('enter')) {
+      this.e = false;
+    } else if (this.t && keyPressed('enter')) {
       this.start();
-      this.title = false;
+      this.t = false;
     }
   }
 
   async createPlayer(): Promise<void> {
     const bulldozerSprite = await loadImage('bulldozer.png');
     const orangutan = new Orangutan(this.map, bulldozerSprite);
-    this.player = orangutan;
+    this.p = orangutan;
     this.lookAt(orangutan);
     this.addChild(orangutan);
     this.addChild(
@@ -115,10 +115,7 @@ class Play extends Scene.class {
         height: 20,
         render(): void {
           this.context.fillStyle = 'lightgreen';
-          const width = Math.max(
-            0,
-            (orangutan.health / orangutan.maxHealth) * 400
-          );
+          const width = Math.max(0, (orangutan.m / orangutan.h) * 400);
           this.context.fillRect(
             800 / 2 - 400 / 2,
             this.parent.camera.y - 640 / 2 + 20,
@@ -164,8 +161,8 @@ class Play extends Scene.class {
     });
 
     const addZone = (zone: Zone): void => {
-      zone.buildings.forEach((building) => this.addChild(building));
-      zone.enemies.forEach((enemy) => this.addChild(enemy));
+      zone.b.forEach((building) => this.addChild(building));
+      zone.e.forEach((enemy) => this.addChild(enemy));
     };
     addZone(zone1);
     addZone(zone2);

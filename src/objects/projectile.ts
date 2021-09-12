@@ -6,21 +6,21 @@ class Projectile extends Sprite.class {
   constructor(
     x: number,
     y: number,
-    dir: Vector,
-    shotSpeed: number,
-    public damage: number,
+    d: Vector,
+    s: number,
+    public e: number,
     color = 'gray',
-    public radius = 4.5
+    public r = 4.5
   ) {
     super({
       x: x,
       y: y,
-      width: radius,
-      height: radius,
+      width: r,
+      height: r,
       color: color,
       ttl: 60,
-      dx: dir.normalize().x * shotSpeed,
-      dy: dir.normalize().y * shotSpeed,
+      dx: d.normalize().x * s,
+      dy: d.normalize().y * s,
     });
   }
 
@@ -29,12 +29,12 @@ class Projectile extends Sprite.class {
     const borderWidth = 0.8;
     this.context.fillStyle = 'black';
     this.context.beginPath();
-    this.context.arc(0, 0, this.radius, 0, 2 * Math.PI);
+    this.context.arc(0, 0, this.r, 0, 2 * Math.PI);
     this.context.fill();
 
     this.context.fillStyle = this.color;
     this.context.beginPath();
-    this.context.arc(0, 0, this.radius - borderWidth, 0, 2 * Math.PI);
+    this.context.arc(0, 0, this.r - borderWidth, 0, 2 * Math.PI);
     this.context.fill();
   }
 
@@ -43,10 +43,10 @@ class Projectile extends Sprite.class {
     if (!this.isAlive()) {
       this.parent?.removeChild(this);
     }
-    if (this.parent instanceof Play && this.parent.player) {
-      const player = this.parent.player;
-      if (collides(this, this.parent.player)) {
-        player.takeDamage(this.damage);
+    if (this.parent instanceof Play && this.parent.p) {
+      const player = this.parent.p;
+      if (collides(this, this.parent.p)) {
+        player.takeDamage(this.e);
         this.parent?.removeChild(this);
       }
     }

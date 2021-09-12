@@ -6,7 +6,7 @@ import { getExplosion } from './explode-pool';
 import Orangutan from './orangutan';
 
 class BuildingPart extends Sprite.class {
-  public hitTime = 0;
+  public h = 0;
 
   constructor(x: number, y: number, public hp: number, material: Animation) {
     super({
@@ -19,14 +19,14 @@ class BuildingPart extends Sprite.class {
   }
 
   handleHit = (player: Orangutan): void => {
-    if (this.hp && new Date().getTime() - this.hitTime < 700) {
+    if (this.hp && new Date().getTime() - this.h < 700) {
       handleObjectBuildingCollision(player, this);
       player.handleHitBuilding();
       return;
     }
     if (this.hp === 0) return;
     this.hp -= 1;
-    this.hitTime = new Date().getTime();
+    this.h = new Date().getTime();
     if (this.hp === 0) {
       this.opacity = 0.33;
       player.handleHitBuilding();
@@ -79,24 +79,24 @@ class Building extends GameObject.class {
   };
 
   update = (): void => {
-    if (this.parent instanceof Play && this.parent.player) {
+    if (this.parent instanceof Play && this.parent.p) {
       if (this.children.every((child) => child.hp <= 0)) {
         const enemy = createBasicEnemy(this.x + this.width / 2, this.y);
         // Stop enemy for a second after spawning
-        enemy.cdCounter = 60;
-        enemy.waitCounter = 60;
+        enemy.cd = 60;
+        enemy.w = 60;
         this.parent.addChild(enemy);
         this.parent.addBuildingScore(this.children.length);
         this.parent.removeChild(this);
         return;
       }
-      if (collides(this.parent.player, this)) {
+      if (collides(this.parent.p, this)) {
         const parent = this.parent;
         if (!parent) return;
         this.children.forEach((child) => {
           if (child instanceof BuildingPart) {
-            if (collides(child, parent.player)) {
-              child.handleHit(parent.player);
+            if (collides(child, parent.p)) {
+              child.handleHit(parent.p);
             }
           }
         });

@@ -2,11 +2,11 @@ import { GameObject, Sprite, Text } from 'kontra';
 import collides from '../helpers/collides';
 import Play from '../scenes/play';
 import { getExplosion } from './explode-pool';
-import Orangutan from './orangutan';
+import o from './orangutan';
 
-class FactoryTank extends Sprite.class {
+class t extends Sprite.class {
   public parent: Factory;
-  public hitTime = 0;
+  public h = 0;
   constructor(
     x: number,
     y: number,
@@ -46,7 +46,7 @@ class FactoryTank extends Sprite.class {
   };
 }
 
-class FactoryCenter extends Sprite.class {
+class f extends Sprite.class {
   public hitTime = 0;
   constructor(x: number, y: number, color = 'gray', size = 256) {
     super({
@@ -83,9 +83,9 @@ class FactoryCenter extends Sprite.class {
 }
 
 class Factory extends GameObject.class {
-  public player: Orangutan;
-  public core: FactoryCenter;
-  public tanks: FactoryTank[] = [];
+  public player: o;
+  public core: f;
+  public tanks: t[] = [];
 
   constructor(x: number, y: number) {
     super({
@@ -99,21 +99,21 @@ class Factory extends GameObject.class {
 
   createParts = (): void => {
     //core
-    this.core = new FactoryCenter(400 - 128, 8);
+    this.core = new f(400 - 128, 8);
     this.addChild(this.core);
 
-    const tank1 = new FactoryTank(416, 320);
+    const tank1 = new t(416, 320);
     this.addChild(tank1);
     this.tanks.push(tank1);
 
-    const tank2 = new FactoryTank(400 - 144, 320);
+    const tank2 = new t(400 - 144, 320);
     this.addChild(tank2);
     this.tanks.push(tank2);
   };
 
   update = (): void => {
-    if (!this.player && this.parent instanceof Play && this.parent.player) {
-      this.player = this.parent.player;
+    if (!this.player && this.parent instanceof Play && this.parent.p) {
+      this.player = this.parent.p;
     }
     this.tanks.forEach((tank) => tank.checkHit());
     if (this.core) this.core.checkHit();

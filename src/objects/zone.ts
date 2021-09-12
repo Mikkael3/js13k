@@ -4,9 +4,9 @@ import Building from './building';
 import Enemy from './enemy';
 
 class Zone {
-  private buildingCount = 33;
-  public buildings: Building[] = [];
-  public enemies: Enemy[] = [];
+  private c = 33;
+  public b: Building[] = [];
+  public e: Enemy[] = [];
   constructor(
     private startY: number,
     private hp: number,
@@ -20,7 +20,7 @@ class Zone {
   }
 
   genBuildings = (): void => {
-    let amount = this.buildingCount;
+    let amount = this.c;
     while (amount > 0) {
       const width = randInt(1, 4);
       const height = randInt(1, 3);
@@ -34,8 +34,8 @@ class Zone {
         this.wall,
         this.explodeColors
       );
-      if (!this.buildings.some((b) => collides(b, building))) {
-        this.buildings.push(building);
+      if (!this.b.some((b) => collides(b, building))) {
+        this.b.push(building);
         amount -= width * height;
       }
     }
@@ -47,7 +47,7 @@ class Zone {
       const x = randInt(0, getCanvas().width);
       const y = randInt(this.startY - 500, this.startY);
       const enemy = police ? createPolice(x, y) : createBasicEnemy(x, y);
-      this.enemies.push(enemy);
+      this.e.push(enemy);
       amount--;
     }
   }

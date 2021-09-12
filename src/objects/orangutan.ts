@@ -1,11 +1,11 @@
 import { degToRad, keyPressed, Sprite, TileEngine } from 'kontra';
 import Play from '../scenes/play';
 
-const canvasWidth = 800;
-const canvasHeight = 640;
+const w = 800;
+const h = 640;
 class Orangutan extends Sprite.class {
-  public maxHealth = 40;
-  public health = this.maxHealth;
+  public h = 40;
+  public m = this.h;
   public parent: Play;
 
   constructor(private map: TileEngine, sprite: HTMLImageElement) {
@@ -16,19 +16,19 @@ class Orangutan extends Sprite.class {
       image: sprite,
       rotation: 0,
     });
-    this.map.sy = this.map.mapheight - canvasHeight;
+    this.map.sy = this.map.mapheight - h;
   }
 
   syncCamera(): void {
-    const startCameraFollow = canvasHeight / 2;
+    const startCameraFollow = h / 2;
     const y = this.y > startCameraFollow ? startCameraFollow : this.y;
-    if (this.y - canvasHeight / 2 > this.parent.sy) return;
-    if (this.map.sy > 0) this.parent.lookAt({ y: y, x: canvasWidth / 2 });
+    if (this.y - h / 2 > this.parent.sy) return;
+    if (this.map.sy > 0) this.parent.lookAt({ y: y, x: w / 2 });
     this.map.sx = 16;
     const sy =
       this.y > startCameraFollow
-        ? this.map.mapheight - canvasHeight
-        : this.map.mapheight - canvasHeight - (startCameraFollow - this.y);
+        ? this.map.mapheight - h
+        : this.map.mapheight - h - (startCameraFollow - this.y);
     this.map.sy = sy > 0 ? sy : 0;
   }
 
@@ -79,9 +79,9 @@ class Orangutan extends Sprite.class {
       Math.sign(this.dy) * Math.max(Math.abs(this.dy) - deceleration, 0);
 
     // Side borders
-    if (this.x > canvasWidth - this.width) {
+    if (this.x > w - this.width) {
       this.dx = 0;
-      this.x = canvasWidth - this.width;
+      this.x = w - this.width;
     } else if (this.x < 0) {
       this.dx = 0;
       this.x = 0;
@@ -92,8 +92,8 @@ class Orangutan extends Sprite.class {
       this.y = 600;
     }
 
-    if (this.parent.sy + canvasHeight - 20 < this.y) {
-      this.y = this.parent.sy + canvasHeight - 20;
+    if (this.parent.sy + h - 20 < this.y) {
+      this.y = this.parent.sy + h - 20;
       this.dy = 0;
     }
     this.advance();
@@ -110,8 +110,8 @@ class Orangutan extends Sprite.class {
   }
 
   public takeDamage(damage: number): void {
-    this.health -= damage;
-    if (this.health <= 0) this.parent.showTitle();
+    this.m -= damage;
+    if (this.m <= 0) this.parent.showTitle();
 
     const damageHue = new Sprite({
       x: 0,

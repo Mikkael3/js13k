@@ -6,9 +6,9 @@ import { getExplosion } from './explode-pool';
 import Projectile from './projectile';
 
 class Enemy extends Sprite.class {
-  public cdCounter = 0; // Cooldown
-  public waitCounter = 0;
-  public windupCounter = 0;
+  public cd = 0; // Cooldown
+  public w = 0;
+  public q = 0;
   public parent: Play;
   constructor(
     x: number,
@@ -16,15 +16,15 @@ class Enemy extends Sprite.class {
     width: number,
     height: number,
     color: string,
-    public speed = 1,
-    public visionRange = 350,
-    public atkRange = 100,
-    public attackCd = 90, // Cooldown in frames
-    public atkWait = 30, // After attacking, stand still for a moment
-    public atkWindup = 30, // Windup before attacking
-    public atkDamage = 1,
-    public projSpeed = 2, // projectile speed
-    public projColor = 'gray'
+    public s = 1,
+    public v = 350,
+    public a = 100,
+    public t = 90, // Cooldown in frames
+    public W = 30, // After attacking, stand still for a moment
+    public u = 30, // Windup before attacking
+    public p = 1,
+    public k = 2, // projectile speed
+    public m = 'gray'
   ) {
     super({
       x: x,
@@ -36,41 +36,41 @@ class Enemy extends Sprite.class {
   }
 
   update(): void {
-    const player = this.parent.player;
+    const player = this.parent.p;
     if (!player) return;
-    if (collides(this.parent.player, this)) {
+    if (collides(this.parent.p, this)) {
       this.handleBulldozerCollision();
       return;
     }
     this.handleBuildingCollision();
     const vectorToPlayer = new Vector(player.x - this.x, player.y - this.y);
-    if (this.windupCounter > 0) {
-      if (this.windupCounter >= this.atkWindup) {
+    if (this.q > 0) {
+      if (this.q >= this.u) {
         this.shoot(vectorToPlayer);
-        this.windupCounter = 0;
+        this.q = 0;
       } else {
-        this.windupCounter++;
+        this.q++;
       }
       return;
     }
-    if (vectorToPlayer.length() < this.visionRange && this.waitCounter <= 0) {
-      const direction = vectorToPlayer.length() < this.atkRange ? -1 : 1;
-      this.dx = vectorToPlayer.normalize().x * this.speed * direction;
-      this.dy = vectorToPlayer.normalize().y * this.speed * direction;
+    if (vectorToPlayer.length() < this.v && this.w <= 0) {
+      const direction = vectorToPlayer.length() < this.a ? -1 : 1;
+      this.dx = vectorToPlayer.normalize().x * this.s * direction;
+      this.dy = vectorToPlayer.normalize().y * this.s * direction;
       this.advance();
     } else {
       this.dx = 0;
       this.dy = 0;
     }
-    if (vectorToPlayer.length() < this.atkRange) {
-      if (this.cdCounter <= 0) {
-        this.cdCounter = this.attackCd;
-        this.windupCounter++;
-        this.waitCounter = this.atkWait;
+    if (vectorToPlayer.length() < this.a) {
+      if (this.cd <= 0) {
+        this.cd = this.t;
+        this.q++;
+        this.w = this.W;
       }
     }
-    this.cdCounter = Math.max(this.cdCounter - 1, 0);
-    this.waitCounter = Math.max(this.waitCounter - 1, 0);
+    this.cd = Math.max(this.cd - 1, 0);
+    this.w = Math.max(this.w - 1, 0);
   }
 
   private handleBulldozerCollision(): void {
@@ -91,9 +91,9 @@ class Enemy extends Sprite.class {
       this.x,
       this.y,
       direction,
-      this.projSpeed,
-      this.atkDamage,
-      this.projColor
+      this.k,
+      this.p,
+      this.m
     );
     this.parent?.addChild(projectile);
   }
