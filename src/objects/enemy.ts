@@ -111,8 +111,7 @@ class Enemy extends Sprite.class {
   }
 
   handleBuildingCollision(): void {
-    const nearbyObjects = this.parent.quadtree.get(this);
-    nearbyObjects.forEach((building) => {
+    this.parent.children.forEach((building) => {
       if (!(building instanceof Building)) return;
       if (collides(this, building)) {
         let xOffset = 0;
