@@ -32,7 +32,6 @@ class Play extends Scene.class {
 
   updateScore(): void {
     this.score = this.humansKilled + this.buildingPartsDestroyed * 100;
-    console.log(this.score);
   }
 
   addBuildingScore(partCount: number): void {

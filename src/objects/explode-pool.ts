@@ -30,7 +30,10 @@ export const getExplosion = (
   const { offsetY = 0, offsetX = 0 } = explosionArgs;
   explodePool.get({
     x: pos.x + object.width / 2 + offsetX,
-    y: calculateCanvasYPosition(state.map, pos.y) + object.height / 2 + offsetY,
+    y:
+      calculateCanvasYPosition(state.map.sy, pos.y) +
+      object.height / 2 +
+      offsetY,
     width: 4,
     height: 4,
     anchor: explosionArgs.anchor,

@@ -1,9 +1,6 @@
-import { getCanvas, TileEngine } from 'kontra';
-
-const calculateCanvasYPosition = (map: TileEngine, objectY: number): number => {
-  const canvasHeight = getCanvas().height;
-  const mapStartSy = map.mapheight - canvasHeight;
-  const deltaSy = mapStartSy - map.sy;
+const calculateCanvasYPosition = (mapSy: number, objectY: number): number => {
+  const mapStartSy = 3520 - 640;
+  const deltaSy = mapStartSy - mapSy;
   const y = objectY + deltaSy;
   return y;
 };
