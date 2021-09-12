@@ -100,9 +100,7 @@ class Play extends Scene.class {
 
     const wall2 = getAnim(0);
 
-    const ceiling3 = getAnim(5);
-
-    const wall3 = getAnim(4);
+    const ceiling3 = getAnim(4);
 
     const zone1 = new Zone(200, 1, ceiling1, wall1, {
       color1: 'yellow',
@@ -114,7 +112,7 @@ class Play extends Scene.class {
       color2: 'orange',
     });
 
-    const zone3 = new Zone(-1600, 3, ceiling3, wall3, {
+    const zone3 = new Zone(-1600, 3, ceiling3, ceiling3, {
       color1: 'yellow',
       color2: 'blue',
     });

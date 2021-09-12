@@ -1,17 +1,16 @@
 import { TileEngine } from 'kontra';
 
 const getLayer = (): number[] => {
-  const jungleTiles = [...Array(4 * 13).keys()].map(() => 9);
+  const jungleTiles = [...Array(4 * 13).keys()].map(() => 8);
 
-  const zone1Tiles = [...Array(14 * 13).keys()].map(() => 7);
+  const zone1Tiles = [...Array(14 * 13).keys()].map(() => 6);
 
-  const zone2Tiles = [...Array(14 * 13).keys()].map(
-    (key: number) => 12 - (key % 2)
-  );
+  const zone2Tiles = [...Array(14 * 13).keys()].map(() => 10);
 
-  const zone3Tiles = [...Array(14 * 13).keys()].map(() => 8);
+  const zone3Tiles = [...Array(14 * 13).keys()].map(() => 7);
 
-  const data = [...Array(10 * 13).keys()].map(() => 10);
+  const data = [...Array(10 * 13).keys()].map(() => 11);
+
   return [...data, ...zone3Tiles, ...zone2Tiles, ...zone1Tiles, ...jungleTiles];
 };
 
