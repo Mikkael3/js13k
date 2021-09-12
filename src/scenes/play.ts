@@ -57,7 +57,6 @@ class Play extends Scene.class {
   }
 
   start(): void {
-    console.log('change scene');
     this.removeChild(this.children[0]);
     this.createPlayer();
     this.createZones();
