@@ -79,7 +79,6 @@ class Play extends Scene.class {
 
   update(dt?: number): void {
     super.update(dt);
-
     if (this.title && keyPressed('enter')) {
       this.start();
       this.title = false;
