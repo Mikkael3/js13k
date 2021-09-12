@@ -38,7 +38,9 @@ class FactoryTank extends Sprite.class {
 
   checkHit = (): void => {
     if (this.parent?.player && collides(this.parent.player, this)) {
-      getExplosion(this);
+      for (let i = 0; i < 30; i++) {
+        getExplosion(this);
+      }
       this.parent.removeChild(this);
     }
   };
@@ -71,7 +73,9 @@ class FactoryCenter extends Sprite.class {
 
   checkHit = (): void => {
     if (this.parent?.player && collides(this.parent.player, this)) {
-      getExplosion(this);
+      for (let i = 0; i < 60; i++) {
+        getExplosion(this);
+      }
       this.parent.removeChild(this);
     }
   };
