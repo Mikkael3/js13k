@@ -1,56 +1,48 @@
 import { Sprite, Vector } from 'kontra';
 import collides from '../helpers/collides';
-import Play from '../scenes/play';
 
-class Projectile extends Sprite.class {
-  constructor(
-    x: number,
-    y: number,
-    dir: Vector,
-    shotSpeed: number,
-    public damage: number,
-    color = 'gray',
-    public radius = 4.5
-  ) {
-    super({
-      x: x,
-      y: y,
-      width: radius,
-      height: radius,
-      color: color,
-      ttl: 60,
-      dx: dir.normalize().x * shotSpeed,
-      dy: dir.normalize().y * shotSpeed,
-    });
-  }
+export default (
+  x: number,
+  y: number,
+  dir: Vector,
+  shotSpeed: number,
+  damage: number
+): Sprite => {
+  return new Sprite({
+    x: x,
+    y: y,
+    width: 4.5,
+    height: 4.5,
+    ttl: 60,
+    color: 'gray',
+    dx: dir.normalize().x * shotSpeed,
+    dy: dir.normalize().y * shotSpeed,
+    draw(): void {
+      const borderWidth = 0.8;
+      this.context.fillStyle = 'black';
+      this.context.beginPath();
+      this.context.arc(0, 0, 4.5, 0, 2 * Math.PI);
+      this.context.fill();
 
-  // Shape is circle but collision is still rectangle
-  draw(): void {
-    const borderWidth = 0.8;
-    this.context.fillStyle = 'black';
-    this.context.beginPath();
-    this.context.arc(0, 0, this.radius, 0, 2 * Math.PI);
-    this.context.fill();
-
-    this.context.fillStyle = this.color;
-    this.context.beginPath();
-    this.context.arc(0, 0, this.radius - borderWidth, 0, 2 * Math.PI);
-    this.context.fill();
-  }
-
-  update(): void {
-    this.advance();
-    if (!this.isAlive()) {
-      this.parent?.removeChild(this);
-    }
-    if (this.parent instanceof Play && this.parent.player) {
-      const player = this.parent.player;
-      if (collides(this, this.parent.player)) {
-        player.takeDamage(this.damage);
+      this.context.fillStyle = 'gray';
+      this.context.beginPath();
+      this.context.arc(0, 0, 4.5 - borderWidth, 0, 2 * Math.PI);
+      this.context.fill();
+    },
+    render(): void {
+      this.draw();
+    },
+    update(): void {
+      this.advance();
+      if (!this.isAlive()) {
         this.parent?.removeChild(this);
       }
-    }
-  }
-}
-
-export default Projectile;
+      if (this.parent?.player) {
+        if (collides(this, this.parent.player)) {
+          this.parent.player.takeDamage(damage);
+          this.parent?.removeChild(this);
+        }
+      }
+    },
+  });
+};

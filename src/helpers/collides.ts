@@ -1,5 +1,4 @@
 import { GameObject, getWorldRect } from 'kontra';
-import Building from '../objects/building';
 
 const collides = (rect1: GameObject, rect2: GameObject): boolean => {
   const r1 = getWorldRect(rect1);
@@ -26,10 +25,8 @@ export const handleObjectBuildingCollision = (
     objectRect.x + objectRect.width / 2 <
     buildingRect.x + buildingRect.width / 2
   ) {
-    // On left side of the building
     xOffset = objectRect.x + objectRect.width - buildingRect.x;
   } else {
-    // On right side of the building
     xOffset = objectRect.x - buildingRect.x - buildingRect.width;
   }
 

@@ -3,7 +3,7 @@ import collides, { handleObjectBuildingCollision } from '../helpers/collides';
 import Play from '../scenes/play';
 import Building from './building';
 import { getExplosion } from './explode-pool';
-import Projectile from './projectile';
+import projectile from './projectile';
 
 class Enemy extends Sprite.class {
   public cdCounter = 0; // Cooldown
@@ -87,15 +87,9 @@ class Enemy extends Sprite.class {
   }
 
   shoot(direction: Vector): void {
-    const projectile = new Projectile(
-      this.x,
-      this.y,
-      direction,
-      this.projSpeed,
-      this.atkDamage,
-      this.projColor
+    this.parent?.addChild(
+      projectile(this.x, this.y, direction, this.projSpeed, this.atkDamage)
     );
-    this.parent?.addChild(projectile);
   }
 
   handleBuildingCollision(): void {

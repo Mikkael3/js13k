@@ -79,7 +79,7 @@ class Building extends GameObject.class {
   };
 
   update = (): void => {
-    if (this.parent instanceof Play && this.parent.player) {
+    if (this.parent?.player) {
       if (this.children.every((child) => child.hp <= 0)) {
         const enemy = createBasicEnemy(this.x + this.width / 2, this.y);
         // Stop enemy for a second after spawning
