@@ -6,8 +6,8 @@ class Projectile extends Sprite.class {
   constructor(
     x: number,
     y: number,
-    direction: Vector,
-    projectileSpeed: number,
+    dir: Vector,
+    shotSpeed: number,
     public damage: number,
     color = 'gray',
     public radius = 4.5
@@ -19,8 +19,8 @@ class Projectile extends Sprite.class {
       height: radius,
       color: color,
       ttl: 60,
-      dx: direction.normalize().x * projectileSpeed,
-      dy: direction.normalize().y * projectileSpeed,
+      dx: dir.normalize().x * shotSpeed,
+      dy: dir.normalize().y * shotSpeed,
     });
   }
 

@@ -4,7 +4,7 @@ import Building from './building';
 import Enemy from './enemy';
 
 class Zone {
-  private buildingAmount = 33;
+  private buildingCount = 33;
   public buildings: Building[] = [];
   public enemies: Enemy[] = [];
   constructor(
@@ -20,7 +20,7 @@ class Zone {
   }
 
   genBuildings = (): void => {
-    let amount = this.buildingAmount;
+    let amount = this.buildingCount;
     while (amount > 0) {
       const width = randInt(1, 4);
       const height = randInt(1, 3);

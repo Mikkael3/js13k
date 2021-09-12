@@ -19,7 +19,7 @@ class Play extends Scene.class {
   public title = true;
   public end = false;
   public humansKilled: number;
-  public buildingPartsDestroyed: number;
+  public squaresDestroyed: number;
 
   constructor(public map: TileEngine, public spriteSheet: SpriteSheet) {
     super({
@@ -30,7 +30,7 @@ class Play extends Scene.class {
   }
 
   addBuildingScore(partCount: number): void {
-    this.buildingPartsDestroyed += partCount;
+    this.squaresDestroyed += partCount;
   }
 
   addHumanScore(): void {
@@ -38,7 +38,7 @@ class Play extends Scene.class {
   }
 
   start(): void {
-    this.buildingPartsDestroyed = 0;
+    this.squaresDestroyed = 0;
     this.humansKilled = 0;
     this.children.map((child) => {
       this.removeChild(child);
@@ -77,7 +77,7 @@ class Play extends Scene.class {
       [
         'The END',
         `You destroyed ${
-          this.buildingPartsDestroyed * 100
+          this.squaresDestroyed * 100
         } m2 of human living space.\nHuman population was reduced by ${
           this.humansKilled
         }.\n`,
