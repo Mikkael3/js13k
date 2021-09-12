@@ -19,7 +19,7 @@ class BuildingPart extends Sprite.class {
   }
 
   handleHit = (player: Orangutan): void => {
-    if (this.hp && new Date().getTime() - this.hitTime < 1000) {
+    if (this.hp && new Date().getTime() - this.hitTime < 700) {
       handleObjectBuildingCollision(player, this);
       player.handleHitBuilding();
       return;
@@ -83,8 +83,8 @@ class Building extends GameObject.class {
       if (this.children.every((child) => child.hp <= 0)) {
         const enemy = createBasicEnemy(this.x + this.width / 2, this.y);
         // Stop enemy for a second after spawning
-        enemy.cooldownCounter = 60;
-        enemy.standstillCounter = 60;
+        enemy.cdCounter = 60;
+        enemy.waitCounter = 60;
         this.parent.addChild(enemy);
         this.parent.addBuildingScore(this.children.length);
         this.parent.removeChild(this);
