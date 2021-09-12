@@ -1,5 +1,5 @@
 import { Animation, GameObject, Sprite } from 'kontra';
-import collides from '../helpers/collides';
+import collides, { handleObjectBuildingCollision } from '../helpers/collides';
 import { createBasicEnemy } from '../helpers/enemy-factory';
 import Play from '../scenes/play';
 import { getExplosion } from './explode-pool';
@@ -20,6 +20,7 @@ class BuildingPart extends Sprite.class {
 
   handleHit = (player: Orangutan): void => {
     if (this.hp && new Date().getTime() - this.hitTime < 1000) {
+      handleObjectBuildingCollision(player, this);
       player.handleHardHitBuilding();
       return;
     }
