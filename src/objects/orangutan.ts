@@ -130,6 +130,7 @@ class Orangutan extends Sprite.class {
       });
     }
     this.health -= damage;
+    if (this.health <= 0) this.parent.showTitle();
 
     const damageHue = new Sprite({
       x: 0,

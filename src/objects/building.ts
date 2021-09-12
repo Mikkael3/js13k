@@ -1,9 +1,8 @@
 import { Animation, GameObject, Sprite, TileEngine } from 'kontra';
-import calculateCanvasYPosition from '../helpers/calculate-canvas-y-position';
 import collides from '../helpers/collides';
 import { createBasicEnemy } from '../helpers/enemy-factory';
 import Play from '../scenes/play';
-import explodePool from './explode-pool';
+import { getExplosion } from './explode-pool';
 import Orangutan from './orangutan';
 
 class BuildingPart extends Sprite.class {
@@ -42,16 +41,7 @@ class BuildingPart extends Sprite.class {
     if (!this.parent) return;
     let i = 0;
     while (i < 50) {
-      const objectY = this.parent.y + this.y + this.height / 2;
-      const y = calculateCanvasYPosition(map, objectY);
-      explodePool.get({
-        x: this.parent.x + this.x + this.width / 2,
-        y,
-        width: 4,
-        height: 4,
-        anchor: { x: 0.5, y: 0.5 },
-        dx: 2 - Math.random() * 4,
-        dy: 2 - Math.random() * 4,
+      getExplosion(this, {
         color:
           i % 2
             ? this.parent.explodeColors.color1

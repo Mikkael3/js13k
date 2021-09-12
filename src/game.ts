@@ -15,6 +15,7 @@ export const state: { map?: TileEngine } = {};
 const main = async (): Promise<void> => {
   init();
   initKeys();
+
   const tileset = await loadImage('tileset.webp');
 
   const spriteSheet = SpriteSheet({
@@ -24,7 +25,9 @@ const main = async (): Promise<void> => {
   });
 
   const map = await getTileMap(tileset);
+
   state['map'] = map;
+
   const play = new Play(map, spriteSheet);
 
   map.addObject(play);

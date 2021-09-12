@@ -17,9 +17,34 @@ import Zone from '../objects/zone';
 
 class Play extends Scene.class {
   public player: Orangutan;
-  public t = true;
+  public title = true;
   constructor(public map: TileEngine, public spriteSheet: SpriteSheet) {
+    super({
+      id: 'play',
+      cullObjects: false,
+    });
+    this.showTitle();
+  }
+
+  start(): void {
+    this.children.map((child) => {
+      console.log(child);
+      this.removeChild(child);
+    });
+    this.createPlayer();
+    this.createZones();
+  }
+
+  showTitle(): void {
+    this.children = [];
+    this.map.sy = 0;
+    this.map.sx = 0;
+    this.x = 0;
+    this.y = 0;
+    this.title = true;
+
     const title = new GameObject({ x: 0, y: 0 });
+    this.lookAt({ x: 400, y: 320 });
     title.addChild(
       new Sprite({
         x: 0,
@@ -31,7 +56,7 @@ class Play extends Scene.class {
     );
 
     const textopts = {
-      font: '24px fantasy',
+      font: '60px fantasy',
       color: 'red',
       textAlign: 'center',
     };
@@ -46,29 +71,18 @@ class Play extends Scene.class {
         })
       );
 
-    text(270, 24, 'Living Space Wars\nOrangutan strikes back');
-    text(250, 200, '<Press ENTER to start>');
+    text(120, 24, 'Living Space Wars\nOrangutan strikes back');
+    text(120, 200, '<Press ENTER to start>');
 
-    super({
-      id: 'play',
-      children: [title],
-      cullObjects: false,
-    });
-  }
-
-  start(): void {
-    console.log('change scene');
-    this.removeChild(this.children[0]);
-    this.createPlayer();
-    this.createZones();
+    this.addChild(title);
   }
 
   update(dt?: number): void {
     super.update(dt);
 
-    if (this.t && keyPressed('enter')) {
-      this.t = false;
+    if (this.title && keyPressed('enter')) {
       this.start();
+      this.title = false;
     }
   }
 
