@@ -1,7 +1,8 @@
-import { Animation, collides, getCanvas, randInt } from 'kontra';
+import { Animation, getCanvas, randInt } from 'kontra';
 import { createBasicEnemy, createPolice } from '../helpers/enemy-factory';
 import Building from './building';
 import Enemy from './enemy';
+import collides from '../helpers/collides';
 
 class Zone {
   private buildingAmount = 33;
