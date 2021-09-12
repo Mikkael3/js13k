@@ -1,4 +1,4 @@
-import { Animation, GameObject, Sprite, TileEngine } from 'kontra';
+import { Animation, GameObject, Sprite } from 'kontra';
 import collides from '../helpers/collides';
 import { createBasicEnemy } from '../helpers/enemy-factory';
 import Play from '../scenes/play';
@@ -18,7 +18,7 @@ class BuildingPart extends Sprite.class {
     });
   }
 
-  handleHit = (map: TileEngine, dt: number, player: Orangutan): void => {
+  handleHit = (player: Orangutan): void => {
     if (this.hp && new Date().getTime() - this.hitTime < 1000) {
       player.handleHardHitBuilding();
       return;
@@ -26,17 +26,12 @@ class BuildingPart extends Sprite.class {
     if (this.hp === 0) return;
     this.hp -= 1;
     this.hitTime = new Date().getTime();
-    if (this.hp === 2) {
-      this.opacity = 0.88;
-      player.handleHardHitBuilding();
-    }
-    if (this.hp === 1) {
-      this.opacity = 0.66;
-      player.handleHardHitBuilding();
-    }
     if (this.hp === 0) {
       this.opacity = 0.33;
       player.handleHitBuilding();
+    } else {
+      this.opacity = 1 - 1 / (2 + this.hp);
+      player.handleHardHitBuilding();
     }
     if (!this.parent) return;
     let i = 0;
@@ -82,7 +77,7 @@ class Building extends GameObject.class {
     }
   };
 
-  update = (dt: number): void => {
+  update = (): void => {
     if (this.parent instanceof Play && this.parent.player) {
       if (this.children.every((child) => child.hp <= 0)) {
         const enemy = createBasicEnemy(this.x + this.width / 2, this.y);
@@ -99,7 +94,7 @@ class Building extends GameObject.class {
         this.children.forEach((child) => {
           if (child instanceof BuildingPart) {
             if (collides(child, parent.player)) {
-              child.handleHit(parent.map, dt, parent.player);
+              child.handleHit(parent.player);
             }
           }
         });
