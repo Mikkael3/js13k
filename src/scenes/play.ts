@@ -4,7 +4,6 @@ import {
   getCanvas,
   keyPressed,
   loadImage,
-  Quadtree,
   Scene,
   Sprite,
   SpriteSheet,
@@ -18,7 +17,6 @@ import Zone from '../objects/zone';
 
 class Play extends Scene.class {
   public player: Orangutan;
-  public quadtree = new Quadtree();
   public t = true;
   constructor(public map: TileEngine, public spriteSheet: SpriteSheet) {
     const title = new GameObject({ x: 0, y: 0 });
