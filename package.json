@@ -6,7 +6,7 @@
     "parcel": "parcel --help",
     "dev": "parcel index.html",
     "build": "parcel build index.html --no-source-maps",
-    "zip": "zip -r game.zip dist",
+    "zip": "zip -r -9 game.zip dist",
     "clear": "rm -rf dist/*.js; rm -rf dist/*.map; rm -rf .cache; rm game.zip; ",
     "build-zip": "npm run clear;node process-kontra.js;npm run build; npm run zip; du -b game.zip; npm run move-kontra-bak",
     "move-kontra-bak": "mv node_modules/kontra/kontra.mjs.bak node_modules/kontra/kontra.mjs"
