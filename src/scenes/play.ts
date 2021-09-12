@@ -1,6 +1,5 @@
 import {
   Animation,
-  getCanvas,
   keyPressed,
   loadImage,
   Scene,
@@ -112,7 +111,7 @@ class Play extends Scene.class {
 
   async createPlayer(): Promise<void> {
     const bulldozerSprite = await loadImage('bulldozer.png');
-    const orangutan = new Orangutan(getCanvas(), this.map, bulldozerSprite);
+    const orangutan = new Orangutan(this.map, bulldozerSprite);
     this.player = orangutan;
     this.lookAt(orangutan);
     this.addChild(orangutan);

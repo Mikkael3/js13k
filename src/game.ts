@@ -25,9 +25,7 @@ const main = async (): Promise<void> => {
   });
 
   const map = await getTileMap(tileset);
-
   state['map'] = map;
-
   const play = new Play(map, spriteSheet);
 
   map.addObject(play);

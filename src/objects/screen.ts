@@ -10,10 +10,9 @@ class Screen extends GameObject.class {
         y: 0,
         width: 800,
         height: 640,
-        color: 'black',
       })
     );
-    texts.forEach((text, i) => {
+    texts.forEach((text) => {
       this.text(120, text, textSize);
     });
   }

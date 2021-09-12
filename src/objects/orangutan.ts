@@ -1,38 +1,34 @@
 import { degToRad, keyPressed, Sprite, TileEngine } from 'kontra';
 import Play from '../scenes/play';
 
+const canvasWidth = 800;
+const canvasHeight = 640;
 class Orangutan extends Sprite.class {
   public maxHealth = 40;
   public health = this.maxHealth;
   public parent: Play;
 
-  constructor(
-    private canvas: HTMLCanvasElement,
-    private map: TileEngine,
-    sprite: HTMLImageElement
-  ) {
+  constructor(private map: TileEngine, sprite: HTMLImageElement) {
     super({
       x: 390,
-      y: -2500,
+      y: 600,
       anchor: { x: 0.5, y: 0.5 },
       image: sprite,
       rotation: 0,
     });
-    this.map.sy = this.map.mapheight - canvas.height;
+    this.map.sy = this.map.mapheight - canvasHeight;
   }
 
   syncCamera(): void {
-    const startCameraFollow = this.canvas.height / 2;
+    const startCameraFollow = canvasHeight / 2;
     const y = this.y > startCameraFollow ? startCameraFollow : this.y;
-    if (this.y - this.canvas.height / 2 > this.parent.sy) return;
-    if (this.map.sy > 0) this.parent.lookAt({ y: y, x: this.canvas.width / 2 });
+    if (this.y - canvasHeight / 2 > this.parent.sy) return;
+    if (this.map.sy > 0) this.parent.lookAt({ y: y, x: canvasWidth / 2 });
     this.map.sx = 16;
     const sy =
       this.y > startCameraFollow
-        ? this.map.mapheight - this.canvas.height
-        : this.map.mapheight -
-          this.canvas.height -
-          (startCameraFollow - this.y);
+        ? this.map.mapheight - canvasHeight
+        : this.map.mapheight - canvasHeight - (startCameraFollow - this.y);
     this.map.sy = sy > 0 ? sy : 0;
   }
 
@@ -83,9 +79,9 @@ class Orangutan extends Sprite.class {
       Math.sign(this.dy) * Math.max(Math.abs(this.dy) - deceleration, 0);
 
     // Side borders
-    if (this.x > this.canvas.width - this.width) {
+    if (this.x > canvasWidth - this.width) {
       this.dx = 0;
-      this.x = this.canvas.width - this.width;
+      this.x = canvasWidth - this.width;
     } else if (this.x < 0) {
       this.dx = 0;
       this.x = 0;
@@ -96,8 +92,8 @@ class Orangutan extends Sprite.class {
       this.y = 600;
     }
 
-    if (this.parent.sy + this.canvas.height - 20 < this.y) {
-      this.y = this.parent.sy + this.canvas.height - 20;
+    if (this.parent.sy + canvasHeight - 20 < this.y) {
+      this.y = this.parent.sy + canvasHeight - 20;
       this.dy = 0;
     }
     this.advance();
