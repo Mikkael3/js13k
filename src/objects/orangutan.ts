@@ -1,7 +1,6 @@
 import { degToRad, keyPressed, Sprite, TileEngine } from 'kontra';
-import calculateCanvasYPosition from '../helpers/calculate-canvas-y-position';
 import Play from '../scenes/play';
-import explodePool from './explode-pool';
+import { getExplosion } from './explode-pool';
 
 class Orangutan extends Sprite.class {
   public maxHealth = 40;
@@ -115,21 +114,16 @@ class Orangutan extends Sprite.class {
   }
 
   public takeDamage(damage: number): void {
-    const objectY = this.parent.y + this.y;
-    const y = calculateCanvasYPosition(this.parent.map, objectY);
     for (let i = 0; i < damage + 1; i++) {
-      explodePool.get({
-        x: this.parent.x + this.x,
-        y,
-        width: 4,
-        height: 4,
-        dx: 1 - Math.random() * 2,
-        dy: 1 - Math.random() * 2,
+      getExplosion(this, {
         color: i % 2 ? 'yellow' : 'gray',
-        ttl: 120,
+        ttl: 25,
+        offsetY: -this.height / 2,
+        offsetX: -this.height / 2,
       });
     }
     this.health -= damage;
+    if (this.health <= 0) this.parent.showTitle();
 
     const damageHue = new Sprite({
       x: 0,
