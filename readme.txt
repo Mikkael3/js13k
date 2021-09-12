@@ -1,6 +1,2 @@
-# Name ideas
-
-Living Space Wars: Orangutan strikes back
-
-Orangutan bulldozer simulator
-Make space for orangutans
+#JS13k 2021
+##Living Space Wars: Orangutan Strikes Back
