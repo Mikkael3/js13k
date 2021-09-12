@@ -1,7 +1,8 @@
 import { GameObject, Sprite, Text } from 'kontra';
 
 class Screen extends GameObject.class {
-  constructor(texts: string[]) {
+  public offsetY = 20;
+  constructor(texts: string[], textSize = 60) {
     super({ x: 0, y: 0 });
     this.addChild(
       new Sprite({
@@ -13,20 +14,23 @@ class Screen extends GameObject.class {
       })
     );
     texts.forEach((text, i) => {
-      this.text(120, 24 + i * 166, text);
+      this.text(120, text, textSize);
     });
   }
-  text = (x: number, y: number, text: string): void =>
-    this.addChild(
-      new Text({
-        x,
-        y,
-        text,
-        font: '60px fantasy',
-        color: 'orange',
-        textAlign: 'center',
-      })
-    );
+  text = (x: number, text: string, size: number): void => {
+    const label = new Text({
+      x,
+      y: 0,
+      text,
+      font: `${size}px fantasy`,
+      color: 'orange',
+      textAlign: 'center',
+    });
+    label.y = this.offsetY;
+    this.offsetY += label.height;
+    label.x = (800 - label.width) / 2;
+    this.addChild(label);
+  };
 }
 
 export default Screen;

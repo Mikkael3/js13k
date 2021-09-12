@@ -62,7 +62,17 @@ class Play extends Scene.class {
     this.y = 0;
     this.lookAt({ x: 400, y: 320 });
 
-    const title = new Screen(['The END', '<Press SPACE to start>']);
+    const title = new Screen(
+      [
+        'The END',
+        '2000 to 3000 orangutans are killed every year',
+        'Orangutans could be extinct\nin the wild in less than 50 years',
+        'Main threat to the survival of orangutans\nis loss of living space',
+        'Please dont bought products that contains palm oil',
+        '<Press SPACE to start>',
+      ],
+      30
+    );
     this.addChild(title);
   }
 
