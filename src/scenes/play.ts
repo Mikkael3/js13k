@@ -14,6 +14,8 @@ import Factory from '../objects/factory';
 import HealthBar from '../objects/health-bar';
 import Orangutan from '../objects/orangutan';
 import Zone from '../objects/zone';
+import { createBasicEnemy, createPolice } from '../helpers/enemy-factory';
+import Building from '../objects/building';
 
 class Play extends Scene.class {
   public player: Orangutan;
@@ -135,6 +137,24 @@ class Play extends Scene.class {
     addZone(zone2);
     addZone(zone3);
     this.addChild(new Factory(0, -55 * 64 + 640));
+
+    for (let i = 0; i < 10; i++) {
+      const y = -2300;
+      const x = 40 + 80 * i;
+      const enemy = createPolice(x, y);
+      this.addChild(enemy);
+      const building = new Building(
+        x,
+        y,
+        1,
+        1,
+        2,
+        ceiling2,
+        wall2,
+        zone2.explodeColors
+      );
+      this.addChild(building);
+    }
   }
 }
 
