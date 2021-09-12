@@ -13,7 +13,7 @@ class Orangutan extends Sprite.class {
   ) {
     super({
       x: 390,
-      y: 600,
+      y: -2500,
       anchor: { x: 0.5, y: 0.5 },
       image: sprite,
       rotation: 0,
