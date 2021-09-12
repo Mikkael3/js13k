@@ -12,17 +12,17 @@ class Screen extends GameObject.class {
         height: 640,
       })
     );
-    texts.forEach((text) => {
-      this.text(120, text, textSize);
+    texts.forEach((text, i) => {
+      this.text(120, text, textSize, i === 0 ? 'red' : 'orange');
     });
   }
-  text = (x: number, text: string, size: number): void => {
+  text = (x: number, text: string, size: number, color): void => {
     const label = new Text({
       x,
       y: 0,
       text,
       font: `${size}px fantasy`,
-      color: 'orange',
+      color: color,
       textAlign: 'center',
     });
     label.y = this.offsetY;

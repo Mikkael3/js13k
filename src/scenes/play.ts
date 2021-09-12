@@ -86,12 +86,12 @@ class Play extends Scene.class {
           this.buildingPartsDestroyed * 100
         } m2 of human living space.\nHuman population was reduced by ${
           this.humansKilled
-        }.`,
+        }.\n`,
         '2000 to 3000 orangutans are killed every year.',
         'Orangutans could be extinct\nin the wild in less than 50 years.',
         'Main threat to the survival of orangutans\nis loss of living space.',
-        'Please dont bought products that contains palm oil.',
-        '<Press SPACE to start>',
+        "Please don't buy products that contains palm oil.",
+        '<Press SPACE to restart>',
       ],
       30
     );
