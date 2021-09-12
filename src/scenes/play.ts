@@ -1,13 +1,10 @@
 import {
   Animation,
-  GameObject,
   getCanvas,
   keyPressed,
   loadImage,
   Scene,
-  Sprite,
   SpriteSheet,
-  Text,
   TileEngine,
 } from 'kontra';
 import { createPolice } from '../helpers/enemy-factory';
@@ -15,6 +12,7 @@ import Building from '../objects/building';
 import Factory from '../objects/factory';
 import HealthBar from '../objects/health-bar';
 import Orangutan from '../objects/orangutan';
+import Screen from '../objects/screen';
 import Zone from '../objects/zone';
 
 class Play extends Scene.class {
@@ -45,37 +43,12 @@ class Play extends Scene.class {
     this.x = 0;
     this.y = 0;
     this.title = true;
-
-    const title = new GameObject({ x: 0, y: 0 });
     this.lookAt({ x: 400, y: 320 });
-    title.addChild(
-      new Sprite({
-        x: 0,
-        y: 0,
-        width: 800,
-        height: 640,
-        color: 'black',
-      })
-    );
 
-    const textopts = {
-      font: '60px fantasy',
-      color: 'red',
-      textAlign: 'center',
-    };
-
-    const text = (x: number, y: number, text: string): void =>
-      title.addChild(
-        new Text({
-          x,
-          y,
-          text,
-          ...textopts,
-        })
-      );
-
-    text(120, 24, 'Living Space Wars\nOrangutan strikes back');
-    text(120, 200, '<Press ENTER to start>');
+    const title = new Screen([
+      'Living Space Wars\nOrangutan Strikes Back',
+      '<Press ENTER to start>',
+    ]);
 
     this.addChild(title);
   }
@@ -87,38 +60,9 @@ class Play extends Scene.class {
     this.map.sx = 0;
     this.x = 0;
     this.y = 0;
-
-    const title = new GameObject({ x: 0, y: 0 });
     this.lookAt({ x: 400, y: 320 });
-    title.addChild(
-      new Sprite({
-        x: 0,
-        y: 0,
-        width: 800,
-        height: 640,
-        color: 'black',
-      })
-    );
 
-    const textopts = {
-      font: '60px fantasy',
-      color: 'red',
-      textAlign: 'center',
-    };
-
-    const text = (x: number, y: number, text: string): void =>
-      title.addChild(
-        new Text({
-          x,
-          y,
-          text,
-          ...textopts,
-        })
-      );
-
-    text(120, 24, 'The END');
-    text(120, 200, '<Press SPACE to start>');
-
+    const title = new Screen(['The END', '<Press SPACE to start>']);
     this.addChild(title);
   }
 
