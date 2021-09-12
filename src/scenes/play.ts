@@ -3,13 +3,13 @@ import {
   keyPressed,
   loadImage,
   Scene,
+  Sprite,
   SpriteSheet,
   TileEngine,
 } from 'kontra';
 import { createPolice } from '../helpers/enemy-factory';
 import Building from '../objects/building';
 import Factory from '../objects/factory';
-import HealthBar from '../objects/health-bar';
 import Orangutan from '../objects/orangutan';
 import Screen from '../objects/screen';
 import Zone from '../objects/zone';
@@ -115,8 +115,25 @@ class Play extends Scene.class {
     this.player = orangutan;
     this.lookAt(orangutan);
     this.addChild(orangutan);
-    const healthBar = new HealthBar(this.player, this.camera);
-    this.addChild(healthBar);
+    this.addChild(
+      new Sprite({
+        width: 400,
+        height: 20,
+        render(): void {
+          this.context.fillStyle = 'lightgreen';
+          const width = Math.max(
+            0,
+            (orangutan.health / orangutan.maxHealth) * 400
+          );
+          this.context.fillRect(
+            800 / 2 - 400 / 2,
+            this.parent.camera.y - 640 / 2 + 20,
+            width,
+            20
+          );
+        },
+      })
+    );
   }
 
   async createZones(): Promise<void> {
