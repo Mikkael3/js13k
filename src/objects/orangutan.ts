@@ -112,10 +112,6 @@ class Orangutan extends Sprite.class {
     this.dx /= 4;
     this.dy /= 4;
   }
-  public handleHardHitBuilding(): void {
-    this.dx = 0;
-    this.dy = 0;
-  }
 
   public takeDamage(damage: number): void {
     this.health -= damage;
